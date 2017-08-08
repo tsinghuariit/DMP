@@ -1,0 +1,19 @@
+{% include 'component-head.html' %}
+{% block head_script %}
+
+{% endblock %}
+<body>
+
+    {% include 'component-navbar.html' %}
+
+    {% block content %}{% endblock %}
+
+    {% include 'component-footer.html' %}
+
+</body>
+
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+{% block tpl_script %}
+
+{% endblock %}
+</html>

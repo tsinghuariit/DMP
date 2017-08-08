@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="Resource-type" content="Document" />
+
+
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.css" />
+  <script src="/static/jquery.min.js"></script>
+  <script src="/static/bootstrap.min.js"></script>
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  var console = { log: function() {} };
+</script>
+<![endif]-->
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='img/logo-inverse.png') }}" alt=""></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/dataset">科研数据平台</a></li>
+          <li><a href="/about">关于我们</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="form-inline">
+              <div class="input-group" id="core-search-menu">
+                {% if search %}
+                <input id="search-box" type="text" class="form-control" placeholder="搜索" value="{{search}}"> {% else %}
+                <input id="search-box" type="text" class="form-control" placeholder="搜索" value=""> {% endif %}
+                <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="location.href='/dataset/search?search='+$('#search-box').val()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span>
+              </div>
+            </div>
+          </li>
+          <li><a href="/login">注册登录</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% include tpl %}
+
+  <footer id="core-bottom-down">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 col-sm-12">
+              <h4>中国开放资源入口</h4>
+              <ul>
+                <li>
+                  <a href="/dataset">科研数据平台</a>
+                </li>
+                <li>
+                  <a href="/about">关于我们</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-12">
+              <h4>用户服务</h4>
+              <ul>
+                <li><a href="/register/captcha/sms">注册</a></li>
+                <li><a href="/login">登录</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-12">
+              <h4>联系我们</h4>
+              <ul>
+                <li><a href="">合作洽谈</a></li>
+                <li><a href="">问题反馈</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-12" id="qrcode">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4>微信公众号</h4></div>
+                  <div class="col-md-12">
+                    <p>
+                      <img src="/static/img/qrcode.png" alt="">
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12" style="padding-bottom:40px">
+            <hr style="border-top-width:3px;">
+            <h>© 2016 清华信息科学与技术国家实验室 - 数据科学创新中心</h>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+
+  </html>

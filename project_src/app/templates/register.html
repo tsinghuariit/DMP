@@ -1,0 +1,52 @@
+<!-- extend base layout -->
+{% extends "base-clear.html" %}
+
+{% block head_script %}
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container core-log">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <a href="/" class="navbar-brand"><img src="/static/img/logo.png" alt=""></a>
+              <p class="core-log-title">完善信息</p>
+            </div>
+            <div class="col-sm-12">{% include 'flash.html' %}</div>
+            <div class="col-sm-12">
+              <form action="" method="post" name="login">
+                <div class="form-group">
+                  {{ form.cellphone(class="form-control",id="core-register-phone",placeholder="手机号") }}{{ cellphone }}
+                </div>
+                <div class="form-group">
+                  {{ form.email(class="form-control",id="core-register-mail",placeholder="邮箱") }}
+                </div>
+                <div class="form-group">
+                  {{ form.password(class="form-control",id="core-register-passw",placeholder="密码") }}
+                </div>
+                <div class="form-group">
+                  {{ form.confirm(class="form-control",id="core-register-passw",placeholder="确认密码") }}
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                    <label><input type="checkbox" checked="checked"> 我已阅读并同意<a href="#">用户协议</a></label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="core-register-btn">完 成 注 册</button>
+                </div>
+              </form>
+              <a href="login" class="btn btn-link btn-block" id="core-reg">我已经有了账号，马上登录 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

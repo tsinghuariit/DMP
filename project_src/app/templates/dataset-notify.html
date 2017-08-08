@@ -1,0 +1,94 @@
+{% extends "dataset-detail.html" %}
+{% block dataset_detail_content %}
+    {% if current_user.is_anonymous %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-user-circle-o"></i>
+            </div>
+            <div class="core-empty-info">您需要登录来<span id="action-name">进行操作</span>
+            </div>
+            <div class="core-empty-desc">使用<code>数据预览、数据可视化、在线分析、数据历史</code>功能需要登录</div>
+            <div class="core-empty-action">
+                <a href="/login" class="btn btn-primary">登录</a>
+                <br><br>
+                <a href="/register/captcha/sms" class="btn btn-link">我还没有账号，去注册
+                    <i class="fa fa-angle-double-right"></i>
+                </a>
+            </div>
+        </div>
+    {% elif current_user.apply_dataset_status(dataset) == -2 %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-key"></i>
+            </div>
+            <div class="core-empty-info">此数据集权限为私密</div>
+            <div class="core-empty-desc">只有作者可以使用该数据集</div>
+        </div>
+    {% elif current_user.apply_dataset_status(dataset) == 1 %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-envelope-o"></i>
+            </div>
+            <div class="core-empty-info">此数据集权限为有限授信</div>
+            <div class="core-empty-desc">您可以向作者申请使用权限</div>
+            <div class="core-empty-action">
+                <a href="{{ url_for('apply_for_authorization', id=dataset.udi) }}" class="btn btn-primary">申请使用权限</a>
+            </div>
+        </div>
+    {% elif current_user.apply_dataset_status(dataset) == 2 %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-envelope-o"></i>
+            </div>
+            <div class="core-empty-info">此数据集权限为有限授信</div>
+            <div class="core-empty-desc">你已申请权限，请等待作者审核</div>
+        </div>
+    {% elif not fileExt in ext['data'] %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-bar-chart"></i>
+            </div>
+            <div class="core-empty-info">{{ fileFull }}<br>{{ fileExt }}格式暂时不支持<span id="action-name">此功能</span>
+            </div>
+            <div class="core-empty-desc">
+                目前仅支持
+                <code>csv</code>
+                <code>json</code>
+                <code>xlsx</code>
+                文件预览</div>
+            <a href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content" class="btn btn-primary">下载文件</a>
+        </div>
+    {% endif %}
+    <script type="text/javascript">
+        function changeNotifyText(e) {
+            switch (e) {
+                case 'preview':
+                    actionName = '数据预览';
+                    iconClass = 'fa fa-bar-chart';
+                    break;
+                case 'visual':
+                    actionName = '数据可视化';
+                    iconClass = 'fa fa-area-chart';
+                    break;
+                case 'bcp':
+                    actionName = '大数据分析';
+                    iconClass = 'fa fa-codepen';
+                    break;
+                case 'rq':
+                    actionName = '报表分析';
+                    iconClass = 'fa fa-code';
+                    break;
+                case 'download':
+                    actionName = '版本及下载';
+                    iconClass = 'fa fa-cloud-download';
+                    break;
+            }
+            $('#action-name').html(actionName);
+            $('.core-empty-icon i').removeAttr('class').addClass(iconClass);
+        };
+        $(document).ready(function () {
+            var actionName = window.location.search.split("?")[1].split("=")[1];
+            changeNotifyText(actionName);
+        });
+    </script>
+{% endblock %}

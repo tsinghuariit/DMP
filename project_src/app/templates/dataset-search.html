@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb hidden-xs hidden-sm">
+          <li>
+            <a href="/">首页</a>
+          </li>
+          <li>
+            <a href="/datasets">科研数据平台</a>
+          </li>
+          <li class="active">搜索数据集</li>
+        </ol>
+      </div>
+      <div class="col-md-3" id="core-filter-o">
+        <div class="core-filter" id="core-filter-v">
+          <h4 class="m-b-20">数据分类</h4>
+          <ul>
+            {% for cate in parent_cates %}
+              <li>
+                <h5>
+                  <a href="#acc-{{ cate['id'] }}">{{ cate['name'] }}</a>
+                </h5>
+                <div class="list-group">
+                  {% for item in cates %}
+                    {% if item['parent_id'] == cate['id']and item['sort'] > 0 %}
+                      {% if cate_url %}
+                        <a href="/datasets/search?cate={{ cate_url }},{{ cate['id']}}:{{ item['id'] }}{% if search %}&search={{ search | urlencode }}{% endif %}" class="list-group-item">{{ item['name'] }}</a>
+                      {% else %}
+                        <a href="/datasets/search?cate={{ cate['id'] }}:{{ item['id'] }}{% if search %}&search={{ search | urlencode }}{% endif %}" class="list-group-item">
+                          <div class="core-filter-count">{{ item['sort'] }}</div>
+                          <div class="core-filter-name">{{ item['name'] }}</div>
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3">
+                <h4>找到{{ datasets.total}}个数据集</h4>
+              </div>
+              <div class="col-md-9">
+                <form action="" class="form-inline">
+                  <button type="button" class="btn btn-default hidden-xs hidden-md hidden-lg m-r-10" data-toggle="modal" data-target="#core-filter-modal">
+                    <i class="fa fa-filter"></i>
+                    打开筛选器</button>
+                  <button type="button" class="btn btn-default btn-block hidden-sm hidden-md hidden-lg m-b-10" data-toggle="modal" data-target="#core-filter-modal">
+                    <i class="fa fa-filter"></i>
+                    打开筛选器</button>
+                  <select class="form-control pull-right" id="core-search-sort">
+                    <option value="updated" {%if sort == 'updated'%} selected{%endif%}>按更新时间排序</option>
+                    <option value="published" {%if sort == 'published'%} selected{%endif%}>按发布时间排序</option>
+                  </select>
+                  <div class="form-group">
+                    <div class="input-group"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          {% if cate_args %}
+            <div class="col-md-12">
+              <ul class="core-filter-tags">
+                {% for c in cate_args %}
+                  <li>
+                    <a href="#" data-value="{{c}}" class="btn btn-default btn-sm btn-cate-tag" role="button">{{cates_map[c.split(':')[-1]]}}
+                      x</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if search %}
+            <div class="col-md-12">
+              <ul class="core-filter-tags">
+                <li>
+                  <a href="#" data-value="search={{search}}" class="btn btn-default btn-sm btn-search-tag" role="button">搜索：{{search}}
+                    x</a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+
+          <div class="col-md-12">
+            <ul>
+              {% for dataset in datasets.items %}
+                {% include 'component-dataset-item.html' %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col-md-12">
+            {#{ pagination.links }#}
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                {% if datasets.has_prev %}
+                  <li>
+                    <a href="{{ url_for('dataset_search', page=datasets.prev_num) }}" aria-label="Previous">
+                      <span aria-hidden="true">{{ _('&laquo; 上一页') }}</span>
+                    </a>
+                  </li>
+                {% endif %}
+                {% for page in pagination.iter_pages() %}
+                  {% if page %}
+                    {% if page != pagination.page %}
+                      <li>
+                        <a href="{{ url_for('dataset_search', page=page) }}">{{ page }}</a>
+                      </li>
+                    {% else %}
+                      <li class="active">
+                        <a>
+                          <strong>{{ page }}</strong>
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li>
+                      <a>
+                        <span class=ellipsis>…</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+                {% if datasets.has_next %}
+                  <li>
+                    <a href="{{ url_for('dataset_search', page=datasets.next_num) }}" aria-label="Next">
+                      <span aria-hidden="true">{{ _('下一页 &raquo;') }}</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="core-filter-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="core-filter-modal-label">筛选器</h4>
+        </div>
+        <div class="modal-body" id="core-filter-m"></div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block tpl_script %}
+  <script type="text/javascript">
+    $('[data-toggle="tooltip"]').tooltip();
+    $(function () {
+      $('.btn-cate-tag').click(function () {
+        var d = $(this).attr('data-value');
+        if (location.href.indexOf(d) > 0) {
+          var h = location.href.replace(d + ',', '').replace(',' + d, '').replace(d, '');
+          location.href = h;
+        }
+      });
+    });
+    $(function () {
+      $('.btn-search-tag').click(function () {
+        var d = $(this).attr('data-value');
+        var h = location.href.split('search=')[0] + '&' + (location.href + '&').split('search=')[1].split('&')[0];
+        location.href = h;
+      });
+    });
+    $(function () {
+      $(document).ready(function () {
+        $('.list-group').each(function () {
+          if ($(this).children().length > 7) {
+            var moreCount = parseInt($(this).children().length) - 5;
+            $(this).append("<a class=\"list-group-item list-group-item-hide\"><i class=\"fa fa-angle-up\" aria-hidden=\"true\"></i> 收起</a>").addClass('list-group-collapse');
+            $(this).after("<a class=\"list-group-item list-group-item-more\"><i class=\"fa fa-angle-down\" aria-hidden=\"true\"></i> 加载更多（" + moreCount + "）</a>");
+          };
+          $('.list-group-item-more').on('click', function (e) {
+            $(this).parent().find('.list-group').removeClass('list-group-collapse');
+            $(this).hide();
+          });
+          $('.list-group-item-hide').on('click', function (e) {
+            $(this).parent().addClass('list-group-collapse');
+            $(this).parent().parent().find('.list-group-item-more').show();
+          });
+        })
+      });
+    });
+    function coreFilterMobile() {
+      if ($(window).width() < 992) {
+        $('#core-filter-m').append($('#core-filter-v'));
+      } else {
+        $('#core-filter-modal').modal('hide');
+        $('#core-filter-o').append($('#core-filter-v'));
+      }
+    };
+
+    $(document).ready(function () {
+      coreFilterMobile();
+      $('#core-search-sort').change(function () {
+        var s = $(this).val();
+        location.href = updateQueryStringParameter(location.href, 'sort', s);
+      });
+      var updateQueryStringParameter = function (uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1
+          ? "&"
+          : "?";
+        if (uri.match(re)) {
+          return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+          return uri + separator + key + "=" + value;
+        }
+      };
+    });
+
+    $(window).resize(function () {
+      coreFilterMobile();
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.core-dataset-title').delegate('[core-dataset-follow=0]', 'click', function () {
+        var button = $(this);
+        var datasetID = $(this).attr('core-dataset-id');
+        var toFollow = $.ajax({
+          url: "/follow_dataset",
+          async: true,
+          type: 'post',
+          data: {
+            id: datasetID
+          },
+          success: function () {
+            button.attr({'core-dataset-follow': '1', 'data-original-title': '取消关注数据集'});
+            button.find('i').removeClass('fa-star-o').addClass('fa-star');
+          }
+        });
+      })
+
+      $('.core-dataset-title').delegate('[core-dataset-follow=1]', 'click', function () {
+        var button = $(this);
+        var datasetID = $(this).attr('core-dataset-id');
+        var unFollow = $.ajax({
+          url: "/unfollow_dataset",
+          async: true,
+          type: 'post',
+          data: {
+            id: datasetID
+          },
+          success: function () {
+            button.attr({'core-dataset-follow': '0', 'data-original-title': '关注数据集'});
+            button.find('i').removeClass('fa-star').addClass('fa-star-o');
+          }
+        });
+      })
+    })
+  </script>
+{% endblock %}

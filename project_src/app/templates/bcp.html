@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>大数据计算服务平台 Big Data Storage and Computing Platform</title>
+        <meta name="description" content="particles.js is a lightweight JavaScript library for creating particles.">
+        <meta name="author" content="Vincent Garreau"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/dcp.css') }}">
+        <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}">
+    </head>
+    <body>
+
+        <!-- particles.js container -->
+        <div id="particles-js"></div>
+
+        <div class="modal fade in" role="dialog" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" style="display: block; padding-left: 0px;margin-top:200px;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="panel panel-default" style="background-color:rgba(255,255,255,.1);border:none;">
+                    <div class="panel-body">
+                        <div id="hero">
+                            <h3>Big Data Storage and Computing Platform</h3>
+                            <h1>大数据计算服务平台</h1>
+                            <h2>专业可信赖的高校科研数据管理平台</h2>
+                            <a href="http://172.171.16.233:8080" class="btn btn-lg btn-line-warning m-t-20">进入平台</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- scripts -->
+            <script src="{{ url_for('static', filename='js/particles/particles.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/particles/app.js') }}"></script>
+
+            <!-- stats.js -->
+
+        </body>
+    </html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    {% if action == 'Edit' %}
+                        <li>
+                            <a href="/datasets/item/{{ dataset['udi'] }}/download">{{ dataset['title'] }}</a>
+                        </li>
+                    {% endif %}
+                    <li class="active">
+                        {% if action == 'Add' %}
+                            {{ _('创建数据集') }}
+                        {% else %}
+                            {{ _('更新数据集') }}
+                        {% endif %}
+                    </li>
+                </ol>
+                {% include 'flash.html' %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% include "dataset-form.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

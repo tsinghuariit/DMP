@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" ng-app="raw" class="rawapp">
+
+<head>
+    <title>RAW</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="RAW,visualization,data,design,spreadsheet,interface,vector graphics,SVG,PNG,JSON">
+    <meta name="Description" content="RAW, missing link between spreadsheets and data visualization, by DensityDesign and Calibro, Giorgio Caviglia, Matteo Azzi, Michele Mauri, Giorgio Uboldi, Tommaso Elli">
+    <meta name="author" content="DensityDesign Research Lab and Studio Calibro">
+
+    <!-- Social Networks meta tags -->
+    <meta property="og:title" content="RAWGraphs">
+    <meta property="og:description" content="The missing link between spreadsheets and data visualization.">
+    <meta property="og:image" content="http://app.rawgraphs.io/imgs/cover-for-socials.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="http://app.rawgraphs.io/">
+    <meta property="og:type" content="article">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@rawgraphs">
+
+    <script>
+        document.write('<base href="' + document.location + '" />');
+    </script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='raw/bower_components/angular-bootstrap-colorpicker/css/colorpicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='raw/bower_components/codemirror/lib/codemirror.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}" />
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#raw-nav">
+    <div ng-view class="raw-container"></div>
+    <!-- jquery -->
+    <script src="{{ url_for('static', filename='raw/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+    <!-- bootstrap -->
+    <script src="{{ url_for('static', filename='raw/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js') }}"></script>
+    <!-- d3 -->
+    <script src="{{ url_for('static', filename='raw/bower_components/d3/d3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/d3-plugins/sankey/sankey.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/d3-plugins/hexbin/hexbin.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/d3-plugins-density/horizon.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/d3-plugins/box/box.js') }}"></script>
+    <!-- codemirror -->
+    <script src="{{ url_for('static', filename='raw/bower_components/codemirror/lib/codemirror.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/codemirror/addon/display/placeholder.js') }}"></script>
+    <!-- canvastoblob -->
+    <script src="{{ url_for('static', filename='raw/bower_components/canvas-toBlob.js/canvas-toBlob.js') }}"></script>
+    <!-- filesaver -->
+    <script src="{{ url_for('static', filename='raw/bower_components/FileSaver/FileSaver.js') }}"></script>
+    <!-- zeroclipboard -->
+    <script src="{{ url_for('static', filename='raw/bower_components/zeroclipboard/dist/ZeroClipboard.min.js') }}"></script>
+    <!-- raw -->
+    <script src="{{ url_for('static', filename='raw/lib/raw.js') }}"></script>
+
+    <!-- charts -->
+    <script src="{{ url_for('static', filename='raw/charts/treemap.js') }}"></script>
+    
+    <!--<script src="{{ url_for('static', filename='raw/charts/line.js') }}"></script>-->
+    <script src="{{ url_for('static', filename='raw/charts/streamgraph.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/scatterPlot.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/packing.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/clusterDendrogram.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/voronoi.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/delaunay.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/alluvial.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/clusterForce.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/convexHullMultiple.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/hexagonalBinning.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/parallelCoordinates.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/circularDendrogram.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/smallMultiplesArea.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/bumpChart.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/pieChart.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/sunburst.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/gantt.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/horizon.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/boxPlot.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/barChart.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/charts/simplePie.js') }}"></script>
+    
+
+    <!-- angular -->
+    <script src="{{ url_for('static', filename='raw/bower_components/angular/angular.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-route/angular-route.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-animate/angular-animate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-sanitize/angular-sanitize.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-strap/dist/angular-strap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-strap/dist/angular-strap.tpl.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-ui/build/angular-ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/ng-file-upload/ng-file-upload.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/is_js/is.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/bower_components/js-xlsx/dist/xlsx.full.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='raw/js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/js/services.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/js/controllers.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/js/filters.js') }}"></script>
+    <script src="{{ url_for('static', filename='raw/js/directives.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="core-about-hero">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12" id="core-about-menu-m">
+
+      </div>
+    </div>
+    {% block about_hero %}
+
+    {% endblock %}
+  </div>
+</div>
+<div class="container core-about">
+  <div class="row">
+    {% block about_content %}
+
+    {% endblock %}
+
+    <div class="col-md-3 col-md-offset-2" id="core-about-menu-o">
+      <ul class="core-about-right" id="core-about-menu">
+        <li><a href="/about"><i class="fa fa-star-o"></i>关于我们</a></li>
+        <li><a href="/join"><i class="fa fa-id-badge m-l-2 m-r-11"></i>加入我们</a></li>
+        <li><a href="/contact"><i class="fa fa-envelope-o"></i>联系方式</a></li>
+        <li><a href="/feedback"><i class="fa fa-paper-plane-o"></i>意见反馈</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block tpl_script %}
+<script type="text/javascript">
+$(document).ready(function(){
+  coreAboutMenu();
+});
+
+$(window).resize(function(){
+  coreAboutMenu();
+});
+
+function coreAboutMenu(){
+  if ($(window).width() < 992) {
+    $('#core-about-menu-m').append($('#core-about-menu'));
+  }
+  else {
+    $('#core-about-menu-o').append($('#core-about-menu'));
+  }
+};
+</script>
+{% endblock %}

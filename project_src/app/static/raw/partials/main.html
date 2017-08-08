@@ -1,0 +1,302 @@
+<div class="raw-menu" ng-init="rawTabs='data'" data-ng-show="detail">
+  <ol ng-style="model.isValid() && {'height':'625px'} || !model.isValid() && {'height':'500px'}">
+    <li ng-class="{'active': rawTabs =='data'}" ng-click="rawTabs='data'">
+      <p>
+        <i class="fa fa-database"></i>1. 数据预览</p>
+    </li>
+    <li ng-class="{'active': rawTabs =='charts'}" ng-click="rawTabs='charts'" data-ng-show="!error && data.length && parsed && detail">
+      <p>
+        <i class="fa fa-line-chart"></i>2. 选择图表</p>
+    </li>
+    <li ng-class="{'active': rawTabs =='maps'}" ng-click="rawTabs='maps'" data-ng-show="!error && data.length && parsed && detail">
+      <p>
+        <i class="fa fa-arrows"></i>3. 建立维度</p>
+    </li>
+    <li ng-class="{'active': rawTabs =='custom'}" ng-click="rawTabs='custom'" data-ng-show="!error && data.length && parsed && detail">
+      <p>
+        <i class="fa fa-eye"></i>视觉选项</p>
+    </li>
+    <li ng-class="{'active': rawTabs =='down'}" ng-show="model.isValid()" ng-click="rawTabs='down'">
+      <p>
+        <i class="fa fa-download"></i>下载图表</p>
+    </li>
+  </ol>
+  <!-- <ol ng-init="rawCollapse = 1" style="align-self:flex-end">
+        <li ng-click="rawCollapse = 0" ng-show="rawCollapse == 1" data-ng-show="option.fitToWidth()">
+            <i class="fa fa-angle-double-left"></i>
+        </li>
+        <li ng-click="rawCollapse = 1" ng-show="rawCollapse == 0" data-ng-show="option.fitToWidth()">
+            <i class="fa fa-angle-double-right"></i>
+        </li>
+    </ol> -->
+</div>
+<!-- <div class="raw-sidebar tab-content" data-ng-show="rawCollapse == 1 && detail"> -->
+<div class="raw-sidebar tab-content" data-ng-show="detail">
+  <section id="raw-data" ng-show="rawTabs == 'data'">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- View as Table -->
+          <!-- View as Text -->
+          <h3>数据预览
+            <button class="btn btn-primary btn-sm pull-right" ng-click="rawTabs='charts'">下一步</button>
+          </h3>
+          <p>这是数据集文件的预览，您可选择以表格／文本形式查看数据内容。</p>
+          <span class="list-type" ng-show="data.length">
+            <button class="btn btn-line-primary" ng-click="dataView='table'" ng-class="{selected:dataView=='disabled'}">
+              <i class="fa fa-table m-r-5"></i>以表格形式显示
+            </button>
+            <button class="btn btn-line-primary" ng-click="dataView='text'" ng-class="{selected:dataView!='disabled'}">
+              <i class="fa fa-align-left m-r-5"></i>以文本形式显示
+            </button>
+          </span>
+          <!-- Default -->
+          <div class="m-t-15" ng-show="parsed">
+            <!-- Table View -->
+            <div data-ng-show="dataView != 'table'">
+              <div class="parsed">
+                <textarea ui-codemirror="codeMirrorOptions" ng-model="text"></textarea>
+              </div>
+            </div>
+            <!-- Text View -->
+            <div raw-table class="data-table" data-ng-show="dataView == 'table'"></div>
+          </div>
+          <div class="json-viewer margin-bottom" json-viewer json="json" ng-show="json" on-select="antani"></div>
+          <p ng-show="json" class="help-block">请选择数组<span class="hidden">Please select the array</span>
+            <strong>[ ]</strong>containing the records you want to load from the JSON above.</p>
+          <div>
+            <!--<div data-ng-show="!loading && !data.length && !error" class="alert"><i class="fa fa-hand-o-right breath-right"></i> Not sure how this works? <a href="http://raw.densitydesign.org/how-it-works/">Take a look at this video</a> or <a href="https://github.com/densitydesign/raw/wiki/FAQs">visit our FAQs</a></div>-->
+            <div data-ng-show="!loading && !error && data.length && parsed" class="alert alert-success">
+              <i class="fa fa-thumbs-up breath-right"></i>
+              <strong>{{data.length}}</strong>
+              条数据记录已经被成功载入
+              <span class="hidden">records in your data have been successfully parsed!</span>
+            </div>
+            <div data-ng-show="!loading && error" class="alert alert-warning">
+              <i class="fa fa-thumbs-down breath-right m-r-5"></i>
+              <strong>Whoops!
+              </strong>{{error}}</div>
+            <div data-ng-show="loading && text.length" class="alert alert-loading">
+              <i class="fa breath-right fa-refresh fa-spin m-r-5"></i>正在加载数据，请稍等<span class="hidden">Loading your data. Please wait.</span>
+            </div>
+          </div>
+          <!-- <div ng-show="parsed">
+                        <div class="pull-right">
+                            <p ng-show="pivot<=0 && !unstacked">您的数据尚未被折叠<span class="hidden">Your data seems unstacked.</span>
+                                <a ng-click="unstacking=true">折叠数据<span class="hidden">Click here to stack it</span></a>
+                            </p>
+                            <p class="text-muted" ng-show="pivot>0 && !unstacked">数据加载完毕，您可以<span class="hidden">Your data seems ready to go. But if you want to stack it anyway,</span>
+                                <a ng-click="unstacking=true">折叠数据<span class="hidden">click here</span></a>
+                            </p>
+                            <p ng-show="unstacked">有些数据被折叠了<span class="hidden">Data is stacked now.</span>
+                                <a ng-click="stack()">显示原始数据<span class="hidden">Click here to revert to your original data</span></a>
+                            </p>
+                            <div ng-show="unstacking" class="pull-right">
+                                <button class="btn btn-default" ng-model="stackDimension" ng-change="unstack();unstacking=false" placeholder="Select a dimension to stack on" bs-options="dimension.key for dimension in metadata" bs-select></button>
+                            </div>
+                        </div>
+                        <a ng-show="!unstacked" ng-click="unstack()" class="btn btn-default">折叠数据<span class="hidden">Stack data</span></a>
+                        <a ng-show="unstacked" ng-click="stack()" class="btn btn-default">取消折叠<span class="hidden">Unstack data</span><i class="fa fa-toggle-on breath-left"></i></a>
+                    </div> -->
+          <!-- <div class="btn btn-link btn-block btn-lg" ng-show="parsed" ng-click="coreDataCollapse">
+											<i class="fa fa-angle-double-up"></i>
+										</div> -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-ng-show="error">
+    <h2>
+      <strong>Ouch.</strong>
+      It seems like RAW encountered some problems while parsing your data. Please, be sure everything is ok with your data. Often this is due to some missing delimiters. If you want to use a
+      <a href="http://en.wikipedia.org/wiki/Delimiter">delimiter char</a>
+      as string literal, please include it in double quotes. See our
+      <a href="https://github.com/densitydesign/raw/wiki/FAQs#raw-says-there-is-something-wrong-with-my-data">FAQs</a>
+      for more information.</h2>
+  </section>
+  <section data-ng-show="!error && data.length && parsed && detail && rawTabs == 'charts'" id="raw-charts">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 id="layout">选择图表<span class="hidden">Choose a Chart</span>
+            <button class="btn btn-primary btn-sm pull-right" ng-click="rawTabs='maps'">下一步</button>
+          </h3>
+          <p>选择一个适合您数据展示的图表，下方是当前选中图表的简介。<span class="hidden">下一步您将通过简单的拖拽将数据项目与图表维度建立联系</span>
+          </p>
+        </div>
+        <div class="col-lg-12">
+          <div class="chart-description">
+            <h4>{{chart.title()}}</h4>
+            <span class="text-muted">{{chart.category()}}</span>
+            <div class="row">
+              <div class="col-lg-12">
+                <!--<div class="chart-thumb" ng-style="{'background-image':'url(' + chart.thumbnail() + ')'}"></div>-->
+              </div>
+              <div class="col-lg-12">
+                <p class="light" ng-bind-html="chart.description()"></p>
+                <p class="light" data-ng-show="!chart.description()">No description given</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12" id="raw-charts-list">
+          <div class="row">
+            <div class="col-lg-6" ng-repeat="c in charts">
+              <div ng-class="{selected: c == chart}" class="layout" ng-click="selectChart(c)">
+                <div class="layout-thumb" ng-style="{'background-image':'url(' + c.thumbnail() + ')'}"></div>
+                <p class="layout-inner">
+                  <span class="layout-title">{{c.title()}}</span>
+                  <span class="text-muted layout-category">{{c.category() || 'Other'}}</span>
+                </p>
+                <div class="layout-check">
+                  <i class="fa fa-check"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+											<a href="https://github.com/densitydesign/raw/wiki/Adding-New-Charts" target="_blank">
+												<div class="layout yours">
+													<div class="layout-thumb">
+														<i class="fa fa-plus"></i>
+													</div>
+													<p class="layout-inner">
+														<span class="layout-title">Custom</span>
+														<span class="text-muted layout-category">Add your charts!</span>
+													</p>
+												</div>
+											</a>
+										</div> -->
+            <!-- end of group -->
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(window).on('resize', function () {
+            var totalHeight = document.body.clientHeight;
+            var listHeight = totalHeight - 320;
+            $('#raw-charts-list').css('height', listHeight);
+          });
+          $(document).ready(function () {
+            $(window).trigger('resize');
+          });
+        </script>
+      </div>
+    </div>
+  </section>
+  <section data-ng-show="!error && data.length && parsed && detail && rawTabs == 'maps'" id="raw-mapping">
+    <div class="container-fluid">
+      <h3>建立维度<span class="hidden">Map your Dimensions</span>
+      </h3>
+      <p>1. 拖拽数据字段到可视化图表提供的维度上，建立数据与图表的联系<br>2. 每个可视化图表提供至少两个维度（如 X 轴、Y 轴等），每个维度都有其适用的数据类型（如字符串 string、数字 number 等），您可以通过维度下方的说明文字来查看<br>3. 维度右上角<i class="fa fa-asterisk"></i>表示您必须为此维度提供相应数据，可视化图表才能生成<br>4. 已经拖入维度中的字段可以继续拖拽到其它维度上，有些维度允许多个字段（如标签 label）<br>5. 完成上述步骤，可视化图表就生成了，您可以在<button class="btn btn-line-primary btn-xs m-l-5 m-r-5" ng-click="rawTabs='custom'">
+          <i class="fa fa-eye m-r-5"></i>视觉选项</button>中调整细节<span ng-show="model.isValid()">和<button class="btn btn-line-primary btn-xs m-l-5 m-r-5" ng-click="rawTabs='down'">
+            <i class="fa fa-eye m-r-5"></i>下载图表</button>
+        </span>
+      </p>
+      <div id="mapping" class="row m-t-15">
+        <div class="col-xs-6">
+          <button class="btn btn-line-primary btn-block light m-b-15" ng-click="model.clear()">
+            <i class="fa fa-trash-o m-r-5"></i>重置所有维度</button>
+          <div draggable>
+            <ul class="list-unstyled dimensions-list">
+              <li class="dimension" data-dimension="{{dimension}}" ng-repeat="dimension in metadata track by $index">
+                <span class="dimension-key">{{ dimension.key }}</span>
+                <span class="dimension-type">{{ dimension.type }}</span>
+                <span class="dimension-icon pull-right">
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-6 mapping">
+          <div class="sticky">
+            <div class="row" group every="3" watch="model">
+              <div class="col-lg-12 dimensions-wrapper" ng-repeat="dimension in model.dimensions().values() track by $index" ng-init="open=false">
+                <div class="dimensions-model">
+                  <div class="dimension-multiple">
+                    <i class="fa fa-tag" data-toggle="tooltip" data-title="You can drag only one dimension here" data-ng-show="!dimension.multiple()"></i>
+                    <i class="fa fa-tags" data-toggle="tooltip" data-title="You can drag more than one dimension here" data-ng-show="dimension.multiple()"></i>
+                  </div>
+                  <i class="fa fa-tags" data-toggle="tooltip" data-title="You can drag more than one dimension here" data-ng-show="dimension.multiple()"></i>
+                  <i class="fa fa-asterisk dimension-required" data-toggle="tooltip" data-title="Required" data-ng-show="dimension.required()"></i>
+                  <a class="dimension-info" data-toggle="tooltip" data-title="Show description" ng-click="open = !open" ng-show="dimension.description()">
+                    <i class="fa fa-info dimension-info-toggle"></i>
+                  </a>
+                  <p class="dimension-title">{{dimension.title()}}</p>
+                  <ul sortable title="dimension.title()" value="dimension.value" multiple="dimension.multiple()" types="dimension.types()" class="dimensions-container list-unstyled"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-ng-show="!error && data.length && parsed && detail && rawTabs == 'custom'" id="raw-custom">
+    <div class="container-fluid">
+      <h3 id="options">视觉选项<span class="hidden">Customize your Visualization</span>
+      </h3>
+      <p>调整图表尺寸、配色</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-unstyled">
+            <li ng-repeat="option in chart.options() track by $index" chart-option>
+              <p class="option-title text-capitalize">
+                {{option.title()}}
+                <button data-ng-show="option.fitToWidth()" class="btn-link option-fit pull-right">
+                  <i class="fa fa-expand m-r-5"></i>适应宽度
+                </button>
+              </p>
+              <div ng-switch="" on="option.type()">
+                <input type="number" min="0" class="form-control" ng-model="option.value" ng-switch-when="number"></input>
+                <div ng-switch-when="checkbox">
+                  <label class=""><input type="checkbox" ng-model="option.value"/></label>
+                </div>
+                <div colors="option.value" ng-switch-when="color"></div>
+                <button type="button" class="btn btn-default" ng-model="option.value" ng-change="$apply()" bs-options="opt for opt in option.values()" bs-select ng-switch-when="list">Action<span class="caret"></span>
+                </button>
+                <input type="text" min="0" class="form-control" ng-model="option.value" ng-switch-default="ng-switch-default"></input>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section ng-show="model.isValid() && rawTabs == 'down'" style="padding-bottom:50px" id="raw-download">
+    <div class="container-fluid">
+      <div>
+        <div id="export" class="row">
+          <div class="col-lg-12">
+            <h3>
+              下载图表</h3>
+            <downloader></downloader>
+          </div>
+          <div class="col-lg-12">
+            <h3 ng-show="!chart.isDrawing()" id="data">
+              <i class="fa fa-code breath-right"></i>内嵌 SVG<span class="hidden">Embed SVG Code</span>
+            </h3>
+            <h3 ng-show="chart.isDrawing()">loading<span class="glyphicon glyphicon-refresh spinning"></span>
+            </h3>
+            <coder ng-show="!chart.isDrawing()"></coder>
+            <p ng-show="!chart.isDrawing()" class="light">复制上方代码到您的网页中来嵌入可视化图表<span class="hidden">Copy the snippet above into your HTML code to embed the visualization</span>
+              <button class="btn-link pull-right" id="copy-button" copy-button data-clipboard-target="source" data-container="body">
+                <i class="fa fa-clipboard m-r-5"></i>
+                复制
+              </button>
+            </p>
+            <div class="text-muted text-center" ng-show="!model.isValid()">
+              <i class="fa fa-hand-o-up breath-right"></i>
+              <h4>
+                <span ng-bind-html="model.instruction()"></span>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div raw-table class="data-table" data-ng-show="dataView == 'table' && !detail" style="height:100%;width:100%;margin-bottom:0;"></div>
+<div class="raw-chart" id="raw-chart" data-ng-show="detail">
+  <div ng-show="model.isValid()" id="chart" chart></div>
+</div>

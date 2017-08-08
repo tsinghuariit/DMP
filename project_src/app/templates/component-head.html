@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% if title %}
+    <title>{{ title }} - 中国开放数据资源入口</title>
+    {% else %}
+    <title>中国开放数据资源入口</title>
+    {% endif %}
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="Resource-type" content="Document" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}" />
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    {#<script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>#}
+    {% block head_script %}
+
+    {% endblock %}
+    <!--[if IE]>
+      <script type="text/javascript">
+         var console = { log: function() {} };
+      </script>
+    <![endif]-->
+
+    <!-- {% if g.locale != 'en' %}
+    <script src="{{ url_for('static', filename='js/moment-' + (g.locale or 'en') + '.min.js') }}"></script>
+    {% endif %} -->
+    {#<script>
+        function translate(sourceLang, destLang, sourceId, destId, loadingId) {
+            $(destId).hide();
+            $(loadingId).show();
+            $.post('/translate', {
+                text: $(sourceId).text(),
+                sourceLang: sourceLang,
+                destLang: destLang
+            }).done(function(translated) {
+                $(destId).text(translated['text'])
+                $(loadingId).hide();
+                $(destId).show();
+            }).fail(function() {
+                $(destId).text("{{ _('Error: Could not contact server.') }}");
+                $(loadingId).hide();
+                $(destId).show();
+            });
+        }
+    </script>#}
+</head>

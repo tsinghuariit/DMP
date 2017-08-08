@@ -1,0 +1,65 @@
+{% extends "user.html" %} {% block profile_content %}
+
+
+    {% if groups_joined.count()==0 and groups_applied.count()==0 %}
+    <div class="core-empty">
+        <div class="core-empty-icon">
+            <i class="fa fa-group"></i>
+        </div>
+    <div class="core-empty-info">还未加入任何群组</div>
+    <div class="core-empty-action">
+        <a href="/group/add" class="btn btn-primary">创建群组</a>
+    </div>
+    </div>
+    {%else%}
+    <h5>正在申请的群组</h5>
+    <hr>
+        <ul class="core-userlist">
+
+        {% for group in groups_applied%}
+            <li>
+                <div class="core-userlist-headphoto">
+                    <img src="{% if group.avatarsource %}{{ group.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt="">
+                </div>
+                <div class="core-userlist-content">
+                    <p class="core-userlist-name"><a href="/group/{{group.id}}" >{{group.name}}</a></p>
+                    <ul class="core-userlist-meta">
+                        <li>
+                            <i class="fa fa-university" aria-hidden="true"></i>
+                            {{group.manager.nickname}}</li>
+                        <li>
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            {{group.introduction}}</li>
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+
+        </ul>
+    <h5>已经加入的群组</h5>
+    <hr>
+    <ul class="core-userlist">
+
+        {% for group in groups_joined%}
+            <li>
+                <div class="core-userlist-headphoto">
+                    <img src="{% if group.avatarsource %}{{ group.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt="">
+                </div>
+                <div class="core-userlist-content">
+                    <p class="core-userlist-name"><a href="/group/{{group.id}}" >{{group.name}}</a></p>
+                    <ul class="core-userlist-meta">
+                        <li>
+                            <i class="fa fa-university" aria-hidden="true"></i>
+                            {{group.manager.nickname}}</li>
+                        <li>
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            {{group.introduction}}</li>
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+
+    </ul>
+    {%endif%}
+
+{% endblock %}

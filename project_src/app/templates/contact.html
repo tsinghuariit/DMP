@@ -1,0 +1,33 @@
+{% extends "a.html" %}
+
+{% block head_script %}
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+{% endblock %}
+
+{% block about_hero %}
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb hidden-xs hidden-sm">
+      <li><a href="/">首页</a></li>
+      <li class="active">联系方式</li>
+    </ol>
+  </div>
+  <div class="col-md-12">
+    <h4>CONTACT</h4>
+    <h2>联系方式</h2>
+  </div>
+</div>
+<ul class="core-about-menu">
+  <li {% if request.path==url_for('contact') %}class="active"{% endif %}><a href="/about">地址</a></li>
+</ul>
+{% endblock %}
+
+{% block about_content %}
+
+<div class="col-md-7">
+  <p>地址：北京市海淀区清华大学信息科学技术大楼(FIT楼)</p>
+  <p>Email：<a href="mailto:contact@coreplatform.org">contact@coreplatform.org</a></p>
+  <a href="http://j.map.baidu.com/__R0F"><img src="{{ url_for('static', filename='img/map.jpg') }}" width="201" height="172"></a>
+</div>
+
+{% endblock %}

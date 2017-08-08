@@ -1,0 +1,52 @@
+{% extends "dataset-detail.html" %}
+
+{% block dataset_detail_content %}
+    <div class="row">
+        <div class="col-md-12" id="core-detail-meta">
+          <ul class="core-dataset-meta">
+              <li>
+                  <label>授权方式</label>
+                  <p>{{ dataset['authority'] }}</p>
+              </li>
+              <li>
+                  <label>发布日期</label>
+                  <p>{{ dataset['published'] }}</p>
+              </li>
+              <li>
+                  <label>修改日期</label>
+                  <p>{{ dataset['updated'] }}</p>
+              </li>
+              <li>
+                  <label>发布用户</label>
+                  <p>{{ dataset['author'].nickname }}</p>
+              </li>
+              <li>
+                  <label>类型分类</label>
+                  <p>{{ dataset['datatype'] }}</p>
+              </li>
+              <li>
+                  <label>专家学者</label>
+                  <p>{{ dataset['expert'] }}</p>
+              </li>
+              <li>
+                  <label>学科分类</label>
+                  <p>{{ dataset['subject'] }}</p>
+              </li>
+              <li>
+                  <label>数据空间分类</label>
+                  <p>{{ dataset['kind'] }}</p>
+              </li>
+          </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tpl_script %}
+    <script type="text/javascript">
+        var url = window.location.pathname.split('/');
+        var purpose = 'meta';
+        if (url.pop() != purpose) {
+            window.location.href = window.location.pathname + "/" + purpose;
+        }
+    </script>
+{% endblock %}

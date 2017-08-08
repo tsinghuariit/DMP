@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    <li class="active">个人设置</li>
+                </ol>
+            </div>
+            <div class="col-md-3">
+                <ul class="nav core-user-nav">
+                    <li {% if request.path==url_for('edit_profile') %} class="active" {% endif %}>
+                        <a href="/edit">个人信息</a>
+                    </li>
+                    <li {% if request.path==url_for('edit_password') %} class="active" {% endif %}>
+                        <a href="/edit/password">修改密码</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                {% include 'flash.html' %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% block edit %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block tpl_script %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a.core-form-content-edit').on('click', function (e) {
+            var form_content = $(this).parent().parent();
+            form_content.find('div.core-form-content-display').hide();
+            form_content.find('div.core-form-content-input').show().attr('id', 'editing');
+            form_content.find('input[type=text]').focus();
+
+            $(document).one('click', function () {
+                $('#editing').parent().find('.core-form-content-display').show();
+                $('#editing').hide();
+                $('#editing').removeAttr('id');
+            });
+
+            $("#editing").on("click", function (e) {
+                e.stopPropagation();
+            });
+
+            e.stopPropagation();
+        });
+    });
+</script>
+<script src="{{ url_for('static', filename='js/jquery.uploadPreview.js') }}"></script>
+<script type="text/javascript">
+    $('#core-headupload-mask').on('click', function () {
+        $('#avatar').trigger('click');
+        $('#headUploadModal').modal('show');
+    });
+</script>
+<script>
+    $("#avatar").uploadPreview({
+        width: 250,
+        height: 250,
+        imgDiv: '#imgPreview',
+        maxSize: 500,
+        uploadButton: '#uploadHeadphoto',
+        uploadModal: '#headUploadModal'
+    });
+    $('#imgPreview').on('click', function () {
+        $('#avatar').trigger('click');
+    });
+</script>
+
+{% endblock %}

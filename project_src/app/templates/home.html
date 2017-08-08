@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta content="IE=edge" http-equiv="X-UA-Compatible">
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<title>中国开放资源入口</title>
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+		<meta name="Resource-type" content="Document"/>
+
+		<link rel="stylesheet" type="text/css" href="/static/jquery.fullPage.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css"/>
+
+		<!--[if IE]> <script type="text/javascript"> var console = { log: function() {} }; </script> <![endif]-->
+
+		<script src="/static/jquery.min.js"></script>
+		<script src="/static/jquery-ui.min.js"></script>
+		<script src="/static/bootstrap.min.js"></script>
+		<script src="/static/jquery.fullPage.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$('#fullpage').fullpage({
+					'verticalCentered': false,
+					'css3': true,
+					'sectionsColor': [
+						'', '#F0F2F4', '#5A327B', '#F0F2F4', ''
+					],
+					'anchors': [
+						'top', 'more', 'verify', 'flow', 'bottom'
+					],
+					'navigation': true,
+					'navigationPosition': 'right',
+					// 'navigationTooltips': ['', 'Powerful', 'Amazing', 'Simple'],
+
+					'onLeave': function (index, nextIndex, direction) {
+						if (index == 3 && direction == 'down') {
+							$('.section').eq(index - 1).removeClass('moveDown').addClass('moveUp');
+						} else if (index == 3 && direction == 'up') {
+							$('.section').eq(index - 1).removeClass('moveUp').addClass('moveDown');
+						}
+
+					}
+				});
+
+				$('#core-kvbutton-more2').click(function (e) {
+					e.preventDefault();
+					$.fn.fullpage.moveTo(2);
+				});
+				$('#core-kvbutton-more3').click(function (e) {
+					e.preventDefault();
+					$.fn.fullpage.moveTo(2);
+				});
+			});
+		</script>
+
+	</head>
+
+	<body>
+		<div id="fullpage">
+			<div class="section" id="section0">
+				<nav class="navbar navbar-inverse">
+					<div class="container">
+						<div class="navbar-header">
+							<!-- menu button under mobile view -->
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a href="/" class="navbar-brand"><img src="/static/img/logo-inverse.png" alt=""></a>
+						</div>
+						<div id="navbar" class="navbar-collapse collapse">
+							<!-- <ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="http://core.sist.tsinghua.edu.cn/" class="btn btn-default">科研数据平台</a>
+								</li>
+							</ul> -->
+							<form action="" class="navbar-form navbar-right">
+								<a href="/" class="btn btn-default">科研数据平台</a>
+							</form>
+						</div>
+						<!--/.navbar-collapse -->
+					</div>
+				</nav>
+
+				<!-- Main jumbotron for a primary marketing message or call to action -->
+				<div class="core-keyview">
+					<div class="container">
+						<h1>中国开放资源入口</h1>
+						<h2>构建统一认证可信的数据体系</h2>
+						<p id="core-kvbutton-more1">
+							<a class="btn btn-warning" href="/" role="button">进入科研数据平台</a>
+						</p>
+						<p id="core-kvbutton-more2">
+							<a class="btn btn-link" href="#more" role="button">了解更多</a>
+						</p>
+						<p id="core-kvbutton-more3">
+							<a class="btn btn-link btn-lg" href="#more" role="button">
+								<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="section" id="section1">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>中国开放资源入口</h1>
+						</div>
+						<div class="col-md-4 col-xs-12">
+							<div class="row">
+								<div class="col-md-12 col-xs-4">
+									<p><img src="/static/img/icon_verify.png" alt=""></p>
+								</div>
+								<div class="col-md-12 col-xs-8">
+									<h2>数据唯一认证标识</h2>
+									<p>一处认证，全网通用；<br>版本管理识别，交易记账永久留存；<br>数据可信签名核对，通用数据引证。</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-xs-12">
+							<div class="row">
+								<div class="col-md-12 col-xs-4">
+									<p><img src="/static/img/icon_database.png" alt=""></p>
+								</div>
+								<div class="col-md-12 col-xs-8">
+									<h2>数据治理平台</h2>
+									<p>提供开源免费的通用数据管理、共享和交换平台。
+										<br>可定制化平台界面、公或私有服务托管。<br>与中国开放资源入口统一认证系统集成，实现本地数据存储、全网目录公开</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-xs-12">
+							<div class="row">
+								<div class="col-md-12 col-xs-4">
+									<p>
+										<img src="/static/img/icon_format.png" alt="">
+									</p>
+								</div>
+								<div class="col-md-12 col-xs-8">
+									<h2>全面支持各种数据类型</h2>
+									<p>支持目前已知通用数据类型，可灵活扩展更多的数据类型，以及对各类型数据的数据签名核对、版本管理、元数据管理等</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<p id="core-kvbutton-more4">
+								<a class="btn btn-warning" href="/" role="button">进入科研数据平台</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section moveDown" id="section2">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<h2>中国开放资源入口</h2>
+							<h1>数据唯一认证标识</h1>
+							<p class="core-verify">10.123/456</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section moveDown" id="section3">
+				<div class="container">
+					<p class="text-center" id="core-flow-hori"><img src="/static/img/flow_hori.png" alt=""></p>
+					<p class="text-center" id="core-flow-vert"><img src="/static/img/flow_vert.png" alt=""></p>
+				</div>
+			</div>
+
+			<div class="section moveDown" id="section4">
+				<div class="container" id="core-bottom-up">
+					<div class="row">
+						<div class="col-md-12">
+							<p>中国开放资源入口</p>
+							<h3 class="hidden-sm hidden-md hidden-lg">让数据的流通<br>更可信、高效、安全</h3>
+							<h3 class="hidden-xs">让数据的流通更可信、高效、安全</h3>
+						</div>
+						<div class="col-md-12">
+							<a href="/" class="btn btn-warning btn-lg" style="margin-top:30px;">进入数据管理平台</a>
+						</div>
+					</div>
+				</div>
+				<footer id="core-bottom-down">
+					<div class="container">
+						<div class="row">
+						{#<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-3 col-sm-4 col-xs-4">
+										<h4>中国开放资源入口</h4>
+										<ul>
+											<li>
+												<a href="/">数据管理平台</a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-3 col-sm-4 col-xs-4">
+										<h4>用户服务</h4>
+										{% if g.user.is_authenticated %}
+											<ul>
+												<li>
+													<a href="/user/{{g.user.id}}">我的空间</a>
+												</li>
+												<li>
+													<a href="/edit">个人设置</a>
+												</li>
+												<li role="separator" class="divider"></li>
+												<li>
+													<a href="/logout">退出登录</a>
+												</li>
+											</ul>
+										{% else %}
+											<ul>
+												<li>
+													<a href="/register">注册</a>
+												</li>
+												<li>
+													<a href="/login">登录</a>
+												</li>
+											</ul>
+										{% endif %}
+									</div>
+									<div class="col-md-3 col-sm-4 col-xs-4">
+										<h4>沟通交流</h4>
+										<ul>
+											<li>
+												<a href="/about">关于我们</a>
+											</li>
+											<li>
+												<a href="/join">加入我们</a>
+											</li>
+											<li>
+												<a href="/contact">联系方式</a>
+											</li>
+											<li>
+												<a href="/feedback">意见反馈</a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-3 col-sm-12 col-xs-12" id="qrcode">
+										<div class="row">
+											<div class="col-md-12">
+												<h4>微信公众号</h4>
+											</div>
+											<div class="col-md-12">
+												<p>
+													<img src="/static/img/qrcode-wht.png" alt="">
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>#}
+							<div class="col-md-6 hidden-xs">
+								<p>© 2016 清华信息科学与技术国家实验室 - 数据科学创新中心</p>
+							</div>
+							<div class="col-md-6">
+								<ul>
+									<li>
+										<a href="/core">中国开放资源入口</a>
+									</li>
+									<li>
+										<a href="/datasets">数据管理平台</a>
+									</li>
+									<li>
+										<a href="http://172.171.16.147:8080/">大数据计算服务平台</a>
+									</li>
+								</ul>
+								<a href="" class="hidden-xs">
+									<i class="fa fa-wechat" style="font-size:24px;"></i>
+								</a>
+							</div>
+							<div class="col-md-6 hidden-sm hidden-md hidden-lg m-t-20">
+								<p class="text-center">
+									<a href="">
+										<i class="fa fa-wechat" style="font-size:24px;"></i>
+									</a>
+								</p>
+								<p class="text-center">© 2016<br>清华信息科学与技术国家实验室 - 数据科学创新中心</p>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+
+	</body>
+
+</html>

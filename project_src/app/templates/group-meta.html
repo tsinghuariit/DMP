@@ -1,0 +1,183 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4>
+            {% if action == 'Add' %}{{ _('创建群组') }}{% endif %}
+            {% if action == 'Edit' %}{{ _('群组设置') }}{% endif %}
+        </h4>
+        <hr>
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="row">
+                        {{ form.hidden_tag() }}
+                        <div class="col-md-12">
+                            <label for="core-group-name">群组标志</label>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="hidden">{{ form.avatar(class="form-control") }}</div>
+                            <div class="core-headupload" style="background-image:url({% if group.avatarsource %}{{ group.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %})">
+                                <div id="core-headupload-mask">上传新头像</div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="headUploadModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" style="width:350px;" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h3 class="text-center" style="margin-top:30px;">预览群组标志</h3>
+                                        <div id="imgPreview" style="margin: 20px auto 30px auto;background-color: #eee;border-radius: 10px;"></div>
+                                        <button type="button" class="btn btn-link btn-block m-b-15" onclick="$('#avatar').trigger('click')">重新选择</button>
+                                        <div class="text-center m-b-15">
+                                            <input class="btn btn-primary" id="uploadGroupHeadphoto" type="submit" value="{{ _('上传群组标志') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script src="{{ url_for('static', filename='js/jquery.uploadPreview.js') }}"></script>
+                        <script type="text/javascript">
+                            $('#core-headupload-mask').on('click', function () {
+                                $('#avatar').trigger('click');
+                                $('#headUploadModal').modal('show');
+                            });
+                        </script>
+                        <script>
+                            $("#avatar").uploadPreview({
+                                width: 250,
+                                height: 250,
+                                imgDiv: '#imgPreview',
+                                maxSize: 1024 * 2,
+                                //uploadButton: '#uploadGroupHeadphoto', uploadModal: '#headUploadModal'
+                            });
+                            $('#imgPreview').on('click', function () {
+                                $('#avatar').trigger('click');
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-10" style="padding-left:30px">
+                    <div class="form-group">
+                        {{ form.hidden_tag() }}
+                        <label for="core-group-name">群组名</label>
+                        {{ form.name(maxlength=64, class="form-control") }}
+                        {% for error in form.name.errors %}
+                            <span class="help-inline">[{{ error }}]</span><br>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.hidden_tag() }}
+                        <label for="core-group-desc">群组简介</label>
+                        {{ form.introduction(maxlength=64, class="form-control") }}
+                        {% for error in form.introduction.errors %}
+                            <span class="help-inline">[{{ error }}]</span><br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ form.hidden_tag() }}
+                        <label for="core-dataset-new-name">加入群组设定</label>
+                        {{ form.authority(maxlength=64, class="form-control hidden") }}
+                        {% for error in form.authority.errors %}
+                            <span class="help-inline">[{{ error }}]</span><br>
+                        {% endfor %}
+                        <!-- <p class="help-block">所有用户都可以看到数据集的元数据信息，您可以设置其他用户是否可以使用本数据集。使用范围包括：下载、在线预览、在线分析。</p> -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="core-dataset-auth core-dataset-auth-public">
+                                    <div class="active">
+                                        <div class="core-dataset-auth-icon">
+                                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="core-dataset-auth-content">
+                                            <h5>自由加入</h5>
+                                            <p>所有用户都可以自由加入本群组，并且无需经过您的批准</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="core-dataset-auth core-dataset-auth-invite">
+                                    <div>
+                                        <div class="core-dataset-auth-icon">
+                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="core-dataset-auth-content">
+                                            <h5>申请制</h5>
+                                            <p>所有用户都可以申请加入本群组，由您来决定是否批准该用户加入</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="core-dataset-auth core-dataset-auth-private">
+                                    <div>
+                                        <div class="core-dataset-auth-icon">
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="core-dataset-auth-content">
+                                            <h5>邀请制</h5>
+                                            <p>所有用户无法主动申请加入本群组，但您可以邀请用户加入本群组</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                    {% if action == 'Add' %}
+                        <button class="btn btn-primary" type="submit">{{ _('创建群组') }}</button>
+                    {% endif %}
+                    {% if action == 'Edit' %}
+                        <button class="btn btn-primary" type="submit">{{ _('保存编辑') }}</button>
+                        <!--<button class="btn btn-link pull-right">解散群组</button-->
+                        {%endif%}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function updateDatasetAuth(i) {
+                switch (i) {
+                    case 0:
+                        $('.core-dataset-auth-public>div').addClass('active');
+                        $('.core-dataset-auth-invite>div').removeClass('active');
+                        $('.core-dataset-auth-private>div').removeClass('active');
+                        $('#authority').val($('#authority option:eq(0)').val());
+                        break;
+                    case 1:
+                        $('.core-dataset-auth-public>div').removeClass('active');
+                        $('.core-dataset-auth-invite>div').removeClass('active');
+                        $('.core-dataset-auth-private>div').addClass('active');
+                        $('#authority').val($('#authority option:eq(1)').val());
+                        break;
+                    case 2:
+                        $('.core-dataset-auth-public>div').removeClass('active');
+                        $('.core-dataset-auth-invite>div').addClass('active');
+                        $('.core-dataset-auth-private>div').removeClass('active');
+                        $('#authority').val($('#authority option:eq(2)').val());
+                    default:
+                        // statements_def
+                        break;
+                }
+            }
+            updateDatasetAuth($('#authority').prop('selectedIndex'));
+            $('.core-dataset-auth-public').click(function () {
+                updateDatasetAuth(0);
+            });
+            $('.core-dataset-auth-invite').click(function () {
+                updateDatasetAuth(2);
+            });
+            $('.core-dataset-auth-private').click(function () {
+                updateDatasetAuth(1);
+            });
+        });
+    </script>

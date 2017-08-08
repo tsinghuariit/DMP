@@ -1,0 +1,181 @@
+{% extends "dataset-detail.html" %}
+{% block dataset_detail_content %}
+  {% if dataset.nofile() %}
+    <div class="row">
+      <div class="col-md-9">
+        <div class="core-empty">
+          <div class="core-empty-icon">
+            <i class="fa fa-bar-chart"></i>
+          </div>
+          <div class="core-empty-info">此数据集没有可以用于下载的文件</div>
+          <div class="core-empty-desc">您可以上传文件</div>
+          <div class="core-empty-action">
+            {% if current_user.id == dataset.author_id %}
+              <a href="/datasets/edit/{{dataset.udi}}" class="btn btn-primary">上传文件</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if dataset.is_authorized(current_user) and not dataset.nofile()%}{# 有权限有文件可以下载 #}
+    <div class="row tab-content">
+      <div class="col-md-9">
+        <div class="core-detail-down">
+          <div class="core-detail-down-left">
+            {% if fileExt in ext['data'] %}
+              <i class="fa fa-database"></i>
+            {% elif fileExt in ext['doc']%}
+              <i class="fa fa-file-word-o"></i>
+            {% elif fileExt in ext['sheet'] %}
+              <i class="fa fa-file-excel-o"></i>
+            {% elif fileExt in ext['ppt'] %}
+              <i class="fa fa-file-powerpoint-o"></i>
+            {% elif fileExt in ext['zip'] %}
+              <i class="fa fa-file-zip-o"></i>
+            {% elif fileExt in ext['img'] %}
+              <i class="fa fa-file-image-o"></i>
+            {% elif fileExt in ext['pdf'] %}
+              <i class="fa fa-file-pdf-o"></i>
+            {% elif fileExt in ext['code'] %}
+              <i class="fa fa-file-code-o"></i>
+            {% else %}
+              <i class="fa fa-file-o"></i>
+            {% endif %}
+            {#<p>{{ fileExt | upper() }}</p>#}
+            {#<a class="btn btn-xs btn-line-primary" href="/datasets/item/{{dataset.udi}}/download/{{dataset.datasource}}" target="_blank"><i class="fa fa-cloud-download m-r-5" style="font-size:14px"></i>下载文件</a>#}
+          </div>
+          <div class="core-detail-down-right">
+            <a href="/datasets/item/{{dataset.udi}}/download/{{dataset.datasource}}">
+              <h4 class="m-b-15 text-primary">
+                <i class="fa fa-cloud-download m-r-10"></i>{{ fileFull }}</h4>
+            </a>
+            {% if dataset.is_authorized(g.user) %}
+              {#<a href="/datasets/item/{{dataset.udi}}/preview#core-dataset-detail-content" class="btn btn-line-primary m-r-10"> <i class="fa fa-bar-chart m-r-10" style="font-size:18px"></i>数据可视化</a> <a
+              href="/datasets/item/{{dataset.udi}}/analysis#core-dataset-detail-content" class="btn btn-line-primary m-r-10"> <i class="fa fa-code m-r-10" style="font-size:18px"></i>大数据分析</a>#}
+              <p>数据指纹：
+                {{ dataset.signature }}</p>
+            {% else %}
+              <a class="btn btn-default" disabled="disabled">
+                <i class="fa fa-remove text-danger m-r-10" style="font-size:18px"></i>此数据集为私密，您没有权限下载该文件</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row tab-content">
+      <div class="col-md-9 tab-pane active" role="tabpanel" id="dataset-version">
+        <h4>数据集历史版本</h4>
+        <hr>
+        {% if dataset_his %}{# 文件有历史版本 #}
+          <ul class="vertical-steps">
+            {% for h in dataset_his %}
+              <li {% if loop.index > 5 %} style="display:none;" {% endif %}>
+                <div class="count">{{ h.his_version }}</div>
+                <p>
+                  <b>版本
+                    {{ h.his_version }}</b>
+                  上传于
+                  {{ h.his_created.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    数据文件：<a href="/datasets/item/{{h.udi}}/download/{{h.datasource}}/version/{{h.his_version}}" target="_blank">
+                      {{ h.datasource.split('/').pop() }}
+                    </a>
+                    <br>数据指纹：
+                    {{ h.signature }}
+                  </div>
+                </div>
+              </li>
+              {% if loop.index == 5 %}
+                {# 历史版本超过 5 条——加载更多 #}
+                <li class="p-b-0" style="cursor:pointer;" id="core-dataset-his-more">
+                  <div class="count"></div>加载更多</li>
+                <script type="text/javascript">
+                  $('#core-dataset-his-more').on('click', function () {
+                    $(this).siblings().show();
+                    $(this).detach();
+                  })
+                </script>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          {% if dataset_his | count < 4 %}
+            <div class="core-empty">
+              {% if current_user.id == dataset.author_id %}
+                <div class="core-empty-action">
+                  <a href="/datasets/edit/{{dataset.udi}}" class="btn btn-line-primary">更新数据集</a>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="core-empty">
+                <div class="core-empty-icon">
+                  <i class="fa fa-database"></i>
+                </div>
+                <div class="core-empty-info">此数据集暂时无历史版本</div>
+                {% if current_user.id == dataset.author_id %}
+                  <div class="core-empty-desc">当您更新数据集元数据或数据文件时，这里将会显示您的数据集历史版本</div>
+                  <div class="core-empty-action">
+                    <a href="/datasets/edit/{{dataset.udi}}" class="btn btn-primary">更新数据文件</a>
+                  </div>
+                {% else %}
+                  <div class="core-empty-desc">当有数据集元数据或数据文件更新时，这里将会显示数据集历史版本</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-9 tab-pane" role="tabpanel" id="dataset-views">
+        <h4>数据账簿</h4>
+        <hr>
+        <ul class="vertical-steps">
+          {% for log in logs_data %}
+            <li {% if loop.index > 5 %} style="display:none;" {% endif %}>
+              <div class="count"></div>
+              <p>
+                <b>用户<a href="/user/{{ dataset['author'].id }}/dataset">
+                    <i class="fa fa-user-o m-r-5" aria-hidden="true"></i>{{ log.nickname }}</a>
+                  于
+                  {{ log.time_diff }}
+                  {% if log.event_name == 'download_dataset' %}下载
+                  {% elif log.event_name == 'dataset_preview' %}预览{% endif %}
+                  了
+                  {{ log.dataset_version }}</b>
+              </p>
+            </li>
+            {% if loop.index == 5 %}
+              {# 历史版本超过 5 条——加载更多 #}
+              <li class="p-b-0" style="cursor:pointer;" id="core-dataset-his-more">
+                <div class="count"></div>加载更多</li>
+              <script type="text/javascript">
+                $('#core-dataset-his-more').on('click', function () {
+                  $(this).siblings().show();
+                  $(this).detach();
+                })
+              </script>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="presentation" class="active">
+            <a href="#dataset-version" data-toggle="tab">
+              <i class="fa fa-spinner m-r-10"></i>历史版本</a>
+          </li>
+          <li role="presentation">
+            <a href="#dataset-views" data-toggle="tab">
+              <i class="fa fa-clock-o m-r-10"></i>数据账簿</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

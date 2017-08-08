@@ -1,0 +1,295 @@
+<h4>
+    {% if action == 'Add' %}
+        {{ _('创建数据集') }}
+    {% else %}
+        <a href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content" class="p-l-5" style="display:inline-block;width:25px">
+            <i class="fa fa-angle-left" style="font-size:21px;"></i>
+        </a>
+        {{ _('更新数据集') }}
+    {% endif %}
+</h4>
+<hr>
+<form action="" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="core-dataset-new-name">数据集名</label>
+                {{ form.title(maxlength=64, class="form-control") }}
+                {% for error in form.title.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="core-dataset-new-desc">数据集简介</label>
+                {{ form.desc(class="form-control",rows="5") }}
+                {% for error in form.desc.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="core-dataset-new-name">数据空间分类</label>
+           		{{ form.kind(maxlength=64, class="form-control") }}
+                {% for error in form.kind.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="core-dataset-new-name">专家学者</label>
+                {{ form.expert(maxlength=64, class="form-control") }}
+                {% for error in form.expert.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="core-dataset-new-name">所在单位</label>
+                {{ form.org(maxlength=64, class="form-control") }}
+                {% for error in form.org.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="core-dataset-new-name">学科分类</label>
+                {{ form.subject(maxlength=64, class="form-control") }}
+                {% for error in form.subject.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="core-dataset-new-name">类型分类</label>
+                {{ form.datatype(maxlength=64, class="form-control") }}
+                {% for error in form.datatype.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="core-dataset-new-name">授权分类</label>
+                {{ form.authority(maxlength=64, class="form-control hidden") }}
+                {% for error in form.authority.errors %}
+                    <span class="help-inline">[{{ error }}]</span><br>
+                {% endfor %}
+                <p class="help-block">所有用户都可以看到数据集的元数据信息，您可以设置其他用户是否可以使用本数据集。使用范围包括：下载、在线预览、在线分析。</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="core-dataset-auth core-dataset-auth-public">
+                            <div class="active">
+                                <div class="core-dataset-auth-icon">
+                                    <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="core-dataset-auth-content">
+                                    <h5>公开</h5>
+                                    <p>所有用户都可以使用本数据集</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="core-dataset-auth core-dataset-auth-invite">
+                            <div>
+                                <div class="core-dataset-auth-icon">
+                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="core-dataset-auth-content">
+                                    <h5>有限授信</h5>
+                                    <p>被批准的用户才能使用本数据集</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="core-dataset-auth core-dataset-auth-private">
+                            <div>
+                                <div class="core-dataset-auth-icon">
+                                    <i class="fa fa-key" aria-hidden="true"></i>
+                                </div>
+                                <div class="core-dataset-auth-content">
+                                    <h5>私密</h5>
+                                    <p>只有您能使用本数据集</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="form-group" id="core-dateset-new-upload">
+        {% if action == 'Add' %}
+            <label>上传数据文件</label>
+        {% else %}
+            <label>更新<code>{{fileName}}</code>文件版本</label>
+        {% endif %}
+        <div class="core-dropzone" id="core-dataset-upload">
+            <p>
+                <i class="fa fa-cloud-upload"></i>
+            </p>
+            <p id="core-dataset-upload-filename">点击或将文件拖拽至此处上传</p>
+        </div>
+        <div id="uploadinput">{{ form.datasource(class="form-control") }}</div>
+    </div>
+    <script type="text/javascript">
+        var file = $('#datasource'),
+            text = $('#core-dataset-upload-filename');
+        file.on('change', function (e) {
+            var name = e.currentTarget.files[0].name;
+            text.text("您选择了文件：" + name);
+        });
+
+        $(function () {
+            //阻止浏览器默认行。
+            $('#core-dataset-upload').on({
+                dragleave: function (e) { //拖离
+                    e.preventDefault();
+                },
+                drop: function (e) { //拖后放
+                    e.preventDefault();
+                },
+                dragenter: function (e) { //拖进
+                    $('#core-dataset-upload-filename').text('拖进');
+                    e.preventDefault();
+                },
+                dragover: function (e) { //拖来拖去
+                    $('#core-dataset-upload-filename').text('拖来拖去');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+    <hr>
+    {% if action == 'Add' %}
+        <button type="submit" class="btn btn-primary">马上创建</button>
+    {% else %}
+        <button type="submit" class="btn btn-primary">保存修改</button>
+        <a href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content" class="btn btn-link">放弃修改</a>
+    {% endif %}
+    {% if action == 'Add' %}
+    {% else %}
+        <a class="btn btn-link pull-right" id="core-dataset-delete" data-toggle="modal" data-target="#core-dataset-delete-confirm">删除数据集</a>
+        <div class="modal fade" id="core-dataset-delete-confirm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">删除数据集
+                            {{ dataset['title'] }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您正在删除当前数据集，此操作无法撤销，您确定要删除该数据集吗</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-link pull-left" id="core-dataset-delete-btn">删除数据集</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">取消操作</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="core-dataset-delete-success" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="core-error">
+                            <i class="fa fa-trash-o text-primary"></i>
+                            <h3>数据集已删除</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('#core-dataset-delete,#core-dataset-delete-btn').on({
+                'mouseover': function () {
+                    $(this).removeClass('btn-link').addClass('btn-danger')
+                },
+                'mouseleave': function () {
+                    $(this).removeClass('btn-danger').addClass('btn-link')
+                }
+            })
+            $('#core-dataset-delete-btn').click(function () {
+                var d;
+                function getUrlUdi() {
+                    var url_list = window.location.pathname.split('/');
+                    udi = url_list[3] + '/' + url_list[4];
+                    if (udi != null)
+                        return udi;
+                    return null;
+                }
+
+                function getData() {
+                    var deleteDataset = $.ajax({
+                        url: "/dataset/delete",
+                        async: false,
+                        type: 'post',
+                        data: {
+                            id: getUrlUdi()
+                        },
+                        success: function () {
+                            $('#core-dataset-delete-confirm').modal('hide');
+                            $('#core-dataset-delete-success').modal('show');
+                            setInterval(function () {
+                                window.location.href = "/datasets";
+                            }, 1000);
+                        }
+                    });
+                }
+                getData();
+            });
+        </script>
+    {% endif %}
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function updateDatasetAuth(i) {
+            switch (i) {
+                case 0:
+                    $('.core-dataset-auth-public>div').addClass('active');
+                    $('.core-dataset-auth-invite>div').removeClass('active');
+                    $('.core-dataset-auth-private>div').removeClass('active');
+                    $('#authority').val($('#authority option:eq(0)').val());
+                    break;
+                case 1:
+                    $('.core-dataset-auth-public>div').removeClass('active');
+                    $('.core-dataset-auth-invite>div').removeClass('active');
+                    $('.core-dataset-auth-private>div').addClass('active');
+                    $('#authority').val($('#authority option:eq(1)').val());
+                    break;
+                case 2:
+                    $('.core-dataset-auth-public>div').removeClass('active');
+                    $('.core-dataset-auth-invite>div').addClass('active');
+                    $('.core-dataset-auth-private>div').removeClass('active');
+                    $('#authority').val($('#authority option:eq(2)').val());
+                default:
+                    // statements_def
+                    break;
+            }
+        }
+        updateDatasetAuth($('#authority').prop('selectedIndex'));
+        $('.core-dataset-auth-public').click(function () {
+            updateDatasetAuth(0);
+        });
+        $('.core-dataset-auth-invite').click(function () {
+            updateDatasetAuth(2);
+        });
+        $('.core-dataset-auth-private').click(function () {
+            updateDatasetAuth(1);
+        });
+    });
+</script>

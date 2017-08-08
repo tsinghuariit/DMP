@@ -1,0 +1,14 @@
+{% extends "error.html" %}
+
+{% block error_icon %}
+<i class="fa fa-desktop text-primary"></i>
+{% endblock %}
+
+{% block error_code %}
+<h1>{{ _('Error 403') }}</h1>
+<h3>{{ _('您没有权限访问该页面或者资源<br>Forbidden') }}</h3>
+{% endblock %}
+
+{% block error_text %}
+<p>，您可以<a href="/login">登录</a>或尝试搜索数据集</p>
+{% endblock %}

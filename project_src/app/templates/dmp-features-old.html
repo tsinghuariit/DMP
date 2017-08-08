@@ -1,0 +1,401 @@
+{% extends "dmp.html" %}
+{% block dmp_content %}
+
+    <section>
+        <div class="container">
+            <ol class="breadcrumb hidden-xs hidden-sm m-t-20">
+                <li>
+                    <a href="/">首页</a>
+                </li>
+                <li>
+                    <a href="/datasets">科研数据平台</a>
+                </li>
+                <li class="active">数据集详情</li>
+            </ol>
+            <div class="dmp-heading">
+                <i class="fa fa-clone m-r-10" aria-hidden="true"></i>功能导览
+            </div>
+            <ul class="row dmp-feature-list">
+                <li class="col-md-4">
+                    <i class="fa fa-pie-chart"></i>
+                    <a href="#dmp-item-storage">
+                        <h4>数据存储</h4>
+                    </a>
+                    <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-database"></i>
+                    <a href="#dmp-item-admin">
+                        <h4>数据管理</h4>
+                    </a>
+                    <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-bar-chart"></i>
+                    <a href="#dmp-item-preview">
+                        <h4>在线预览</h4>
+                    </a>
+                    <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-eye"></i>
+                    <a href="#dmp-item-auth">
+                        <h4>数据权限</h4>
+                    </a>
+                    <p>公开、有限授信、灵活的授权方式保证您的数据安全</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-code"></i>
+                    <a href="#dmp-item-analysis">
+                        <h4>在线分析</h4>
+                    </a>
+                    <p>不用部署和启动复杂的集成环境，通过云服务，即可在线执行程序代码</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-clock-o"></i>
+                    <a href="#dmp-item-version">
+                        <h4>版本管理</h4>
+                    </a>
+                    <p>随时更新您的数据文件版本，包括元数据在内的任何修改动作都会记录在案</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-book"></i>
+                    <a href="#dmp-item-admin">
+                        <h4>数据出版</h4>
+                    </a>
+                    <p>高度流程自动出版</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-id-badge"></i>
+                    <a href="#dmp-item-udi">
+                        <h4>数据引证</h4>
+                    </a>
+                    <p>全网可查唯一认证标识，全程保证数据可靠性</p>
+                </li>
+                <li class="col-md-4">
+                    <i class="fa fa-envelope"></i>
+                    <a href="#dmp-item-admin">
+                        <h4>数据发布</h4>
+                    </a>
+                    <p>提供全方位元数据</p>
+                </li>
+                <li class="col-md-4">
+                    <a href="#dmp-item-auth">
+                        <i class="fa fa-lock"></i>
+                    </a>
+                    <h4>数据安全</h4>
+                    <p>全方位安全保障</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="dmp-screen">
+    <div class="container">
+        <div class="dmp-heading">
+            <i class="fa fa-clone m-r-10" aria-hidden="true"></i>功能截图</div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">数据检索与筛选</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-filter">
+                    <h4>数据筛选</h4>
+                    <p>丰富的元数据提供了可筛选结果</p>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <img src="{{ url_for('static', filename='img/intro/dataset-search.jpg') }}" alt="">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-search">
+                    <h4>数据检索</h4>
+                    <p>检索整个数据库，并可通过元数据进行过滤</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>数据筛选</h4>
+                    <p>丰富的元数据提供了可筛选结果</p>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>数据检索</h4>
+                    <p>检索整个数据库，并可通过元数据进行过滤</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">数据存储、引证、元数据和版本管理</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-storage">
+                    <h4>数据存储</h4>
+                    <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+                </div>
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-version">
+                    <h4>版本管理</h4>
+                    <p>数据库的每一次变更都将记录在案</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="{{ url_for('static', filename='img/intro/dataset-detail.jpg') }}" alt="">
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-udi">
+                    <h4>数据引证标识</h4>
+                    <p>开放资源唯一认证，保证其可靠性</p>
+                </div>
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-meta">
+                    <h4>元数据信息</h4>
+                    <p>数据库详尽的元数据信息，为数据库检索提供分类和筛选的基础</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item  hidden-md hidden-lg">
+                    <h4>数据存储</h4>
+                    <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+                </div>
+                <div class="dmp-item  hidden-md hidden-lg">
+                    <h4>版本管理</h4>
+                    <p>数据库的每一次变更都将记录在案</p>
+                </div>
+                <div class="dmp-item  hidden-md hidden-lg">
+                    <h4>数据引证标识</h4>
+                    <p>开放资源唯一认证，保证其可靠性</p>
+                </div>
+                <div class="dmp-item  hidden-md hidden-lg">
+                    <h4>元数据信息</h4>
+                    <p>数据库详尽的元数据信息，为数据库检索提供分类和筛选的基础</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">数据集在线预览</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-preview">
+                    <h4>在线预览</h4>
+                    <p>无需下载，借助大数据云存储功能，即可实现无差别在线数据预览</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="{{ url_for('static', filename='img/intro/dataset-preview.jpg') }}" alt="">
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>在线预览</h4>
+                    <p>无需下载，借助大数据云存储功能，即可实现无差别在线数据预览</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">在线预览之数据可视化</div>
+            </div>
+            <div class="col-md-5">
+                <img src="{{ url_for('static', filename='img/intro/data-visualization1.jpg') }}" alt="">
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="{{ url_for('static', filename='img/intro/data-visualization2.jpg') }}" alt="">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="dmp-item" id="dmp-item-visual">
+                            <h4>在线数据可视化</h4>
+                            <p>在线进行最直观的数据可视化，有多达可自由定义图表维度，表现形式，并可直接输出数据可视化文件</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">在线预览之可视化图表</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-charts">
+                    <h4>在线数据可视化</h4>
+                    <p>超过二十余种在线数据可视化图表，数量正在不断增加中，亦可根据您的需求进行量身定制</p>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <img src="{{ url_for('static', filename='img/intro/charts.jpg') }}" alt="">
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>在线数据可视化</h4>
+                    <p>超过二十余种在线数据可视化图表，数量正在不断增加中，亦可根据您的需求进行量身定制</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">数据管理、授权、版本更新</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-admin">
+                    <h4>数据管理</h4>
+                    <p>在线即可随时管理您的数据集数据集元数据、授权方式、授权人员列表、版本控制</p>
+                </div>
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-auth">
+                    <h4>数据授权</h4>
+                    <p>灵活的授权方式保证您的数据安全</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-public m-b-15" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>公开</h5>
+                                        <p>所有用户都可以使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-invite m-b-15" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>有限授信</h5>
+                                        <p>被批准的用户才能使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-private" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>私密</h5>
+                                        <p>只有您能使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="{{ url_for('static', filename='img/intro/dataset-auth.jpg') }}" alt="">
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-update">
+                    <h4>版本更新</h4>
+                    <p>随时更新您的数据文件版本，包括元数据的修改都会记录在案</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>数据管理</h4>
+                    <p>在线即可随时管理您的数据集数据集元数据、授权方式、授权人员列表、版本控制</p>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>数据授权</h4>
+                    <p>灵活的授权方式保证您的数据安全</p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-public m-b-15" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>公开</h5>
+                                        <p>所有用户都可以使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-invite m-b-15" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>有限授信</h5>
+                                        <p>被批准的用户才能使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="core-dataset-auth core-dataset-auth-private" style="background-color: white;">
+                                <div class="active">
+                                    <div class="core-dataset-auth-icon" style="padding: 20px 10px;">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="core-dataset-auth-content" style="padding: 10px 5px;margin-left: 50px;">
+                                        <h5>私密</h5>
+                                        <p>只有您能使用本数据集</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>版本更新</h4>
+                    <p>随时更新您的数据文件版本，包括元数据的修改都会记录在案</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dmp-item-title">数据日志、用户系统、关注、群组和统计信息</div>
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-user">
+                    <h4>用户系统</h4>
+                    <p>用户系统提供了基础的社交功能，数据集创作者由此连结</p>
+                </div>
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-follow">
+                    <h4>社交功能</h4>
+                    <p>通过关注与群组操作，拥有相同研究领域的数据集创作者得以集结</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <img src="{{ url_for('static', filename='img/intro/user.jpg') }}" alt="">
+            </div>
+            <div class="col-md-2">
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-stat">
+                    <h4>统计信息</h4>
+                    <p>之后将提供信息可视化的数据集统计信息</p>
+                </div>
+                <div class="dmp-item hidden-xs hidden-sm" id="dmp-item-log">
+                    <h4>数据日志</h4>
+                    <p>数据日志提供可追查的数据集动作信息</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>用户系统</h4>
+                    <p>用户系统提供了基础的社交功能，数据集创作者由此连结</p>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>社交功能</h4>
+                    <p>通过关注与群组操作，拥有相同研究领域的数据集创作者得以集结</p>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>统计信息</h4>
+                    <p>之后将提供信息可视化的数据集统计信息</p>
+                </div>
+                <div class="dmp-item hidden-md hidden-lg">
+                    <h4>数据日志</h4>
+                    <p>数据日志提供可追查的数据集动作信息</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

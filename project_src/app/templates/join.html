@@ -1,0 +1,154 @@
+{% extends "a.html" %}
+
+{% block about_hero %}
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb hidden-xs hidden-sm">
+      <li><a href="/">首页</a></li>
+      <li class="active">加入我们</li>
+    </ol>
+  </div>
+  <div class="col-md-12">
+    <h4>JOIN US</h4>
+    <h2>加入我们</h2>
+  </div>
+</div>
+<ul class="core-about-menu">
+  <li {% if request.path==url_for('join') %}class="active"{% endif %}><a href="/about">开放岗位</a></li>
+</ul>
+{% endblock %}
+
+{% block about_content %}
+
+<div class="col-md-7">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="core-about-content">
+        <p>CORE 立足于清华大学，为高校提供创新的科研大数据解决方案。</p>
+      </div>
+      <hr>
+      <h4>现有以下岗位开放申请：</h4>
+      <div id="job-menu" style="margin-top: 30px;margin-bottom: 30px;">
+      </div>
+      <hr>
+    </div>
+    <div class="col-md-12">
+      <div class="core-about-content" id="core-job-list">
+
+        <h4 id="toc_0">Python Web 开发工程师</h4>
+
+        <hr>
+
+        <p><strong>职位描述</strong></p>
+
+        <ul>
+          <li>负责数据资源管理平台  web 产品的后端开发工作</li>
+          <li>主要开发语言为 Python，主要框架为 Flask</li>
+          <li>与产品设计师、前端工程师一起探讨、设计、实现 web 产品的新功能及改进</li>
+          <li>与基础架构工程师、运维工程师一起实现稳定、可扩展的后台服务</li>
+          <li>数据驱动，不断通过产品和技术数据进行改进，并完成快速迭代</li>
+        </ul>
+
+        <p><strong>任职资格</strong></p>
+
+        <ul>
+          <li>对计算机相关基础知识有较好理解，了解常用数据结构和算法</li>
+          <li>掌握至少一门编程语言，如 Python、Ruby、Java、PHP 等</li>
+          <li>熟悉常用 web 开发相关技术，如 web 框架、HTTP 协议、web 安全等</li>
+          <li>掌握关系数据库及 SQL 相关知识，了解基本的设计和优化原则</li>
+          <li>良好的编码风格及测试习惯</li>
+          <li>良好的沟通能力，有团队合作精神和责任感</li>
+          <li>有很强的学习能力，有主动性和上进心，能承担压力</li>
+        </ul>
+
+        <h4 id="toc_1">Hadoop 开发工程师</h4>
+
+        <hr>
+
+        <p><strong>职位描述</strong></p>
+
+        <ul>
+          <li>在线和离线分布式数据分析系统设计和研发</li>
+          <li>数据收集和传输系统的设计和开发</li>
+          <li>大数据平台的搭建、监控、性能调优</li>
+        </ul>
+
+        <p><strong>任职资格</strong></p>
+
+        <ul>
+          <li>精通Java 语言、以及常用的设计模式，对使用Java多线程，共享变量的操作、死锁有较深入的认识，了解常用的工具对Java应用程序进行诊断方式</li>
+          <li>熟悉Scala，Python语言，熟练再Linux系统环境开发，应用部署等操作，能够使用Java或scala语言编写Mapreduce、Spark等应用程序，以及相关的性能优化方式</li>
+          <li>熟悉常用的数据结构和算法，有再业务或分布式系统中解决负载均衡，数据一致性保证的经验尤佳</li>
+          <li>熟练掌握多个大数据相关组件的使用、原理实现、常用的性能优化方案、可以应用的场景如Hadoop，Hbase，Zookeeper、Hive、Scoop 、Kafka，能够独立完这些组件的部署和基本优化。理解Nosql，熟练使用Mysql，Oracle数据库</li>
+          <li>熟悉对分布式系统的监控、运维、故障恢复，高可用配置，熟悉Ambari等大数据平台安装及运维工具的优先考虑</li>
+          <li>熟练使用Maven、Gradle、Nexus 、Hudson、Git 等项目管理、持续集成、代码管理工具，能独立搭建开发项目骨架并能制定开发规范</li>
+          <li>熟练使用常用的测试框架，重视单元测试，集成测试，保证代码质量，并定期对其不合理和可优化的地方进行重构</li>
+          <li>有快速和持续学习的能力，动手能力强，有进去心、责任心强</li>
+        </ul>
+
+        <h4 id="toc_2">大数据中心网络运维开发工程师</h4>
+
+        <hr>
+
+        <p><strong>职位描述</strong></p>
+
+        <ul>
+          <li>负责各种应用服务的上线部署、日常运维工作，数据中心机房的日常维护；</li>
+          <li>负责业务系统的应用级别维护。内容包括：应用异常维护，系统日常更新、部署等；</li>
+          <li>负责编写常用脚本，提升自动化运维水平；</li>
+          <li>负责业务系统的日常监控和维护工作， 及时处理故障并书写故障报告，确保业务系统的正常运行及应急响应；</li>
+          <li>系统的灾备恢复、相关数据的备份、存储；</li>
+          <li>协助制定和改进部署、维护流程，提高服务运行质量；</li>
+          <li>负责和对口的开发、产品团队及供应商沟通及评估运维需求、优化系统架构和流程；</li>
+          <li>负责相关工作文档撰写及上级安排的其他相关工作。</li>
+        </ul>
+
+        <p><strong>任职资格</strong></p>
+
+        <ul>
+          <li>5年以上应用运维工作经验；</li>
+          <li>具有应用运维经验，有大型网站部署及维护经验；</li>
+          <li>精通应用软件的发布、版本管理；</li>
+          <li>熟练应用系统运维问题的分析诊断和处理流程；</li>
+          <li>熟悉Linux操作系统；熟悉应用服务器和负载均衡常用软件的安装配置和优化；具备数据库运维经验；</li>
+          <li>熟悉常用监控系统；</li>
+          <li>至少会使用1种服务器脚本语言，如Python,Shell等；</li>
+          <li>熟悉Hadoop大数据平台搭建和运维经验的优先考虑；</li>
+          <li>具有中大型互联网公司从业经历，有高并发高流量运维经验者优先考虑。</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#core-job-list h4').each(function() {
+  var position = $(this).html();
+  var mailButton = "<a class=\"btn btn-line-primary\" style=\"margin-left:30px;\" href=\"mailto:join@coreplatform.org?Subject=【职位申请】" + position +"\">申请职位</a><a href=\"#job-menu\" class=\"btn btn-link pull-right\"><i class=\"fa fa-angle-up\"></i></a>"
+  var link = $(this).attr('id');
+  var jobButton = "<a href=\"#"+ link +"\" class=\"btn btn-line-primary btn-lg\" style=\"margin-bottom:10px; margin-right:10px;\" >"+ position +"</a>";
+  console.log(position);
+  $(this).append(mailButton);
+  $('#job-menu').append(jobButton);
+});
+
+$(function() {
+  $('a[href*="#"]:not([href="#"])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: target.offset().top -10
+        }, 500);
+        return false;
+      }
+    }
+  });
+});
+// $('.core-about-content p strong').each(function(){
+//   $(this).parent().css('text-indent','0');
+// });
+</script>
+{% endblock %}

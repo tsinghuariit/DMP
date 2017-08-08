@@ -1,0 +1,59 @@
+{% extends "base-clear.html" %}
+
+{% block content %}
+
+<div class="container core-log">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <a href="/" class="navbar-brand"><img src="/static/img/logo.png" alt=""></a>
+              <p class="core-log-title">登 录</p>
+            </div>
+            <div class="col-sm-12">{% include 'flash.html' %}</div>
+            <div class="col-sm-12">
+              <form action="" method="post" name="login">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                  {{ form.user_id(class="form-control", placeholder="请输入邮箱/手机号") }}
+                  {% for error in form.user_id.errors %}
+                  <span class="help-inline">[{{ error }}]</span><br>
+                  {% endfor %}
+                </div>
+                <div class="form-group">
+                  {{ form.password(class="form-control", placeholder="请输入密码") }}
+                  {% for error in form.password.errors %}
+                  <span class="help-inline">[{{ error }}]</span><br>
+                  {% endfor %}
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <div class="checkbox">
+                        <label class="checkbox" for="remember_me">
+                          {{ form.remember_me }}
+                          {{ _('下次自动登录') }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <a href="forget" class="btn btn-link pull-right">忘记密码</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="core-login-btn">马 上 登 录</button>
+                </div>
+              </form>
+              <a href="register/captcha/sms" class="btn btn-link btn-block" id="core-reg">我还没有账号，马上注册 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

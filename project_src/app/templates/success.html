@@ -1,0 +1,36 @@
+{% extends "base-clear.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="core-error core-error-500">
+          {% block success_icon %}
+          {% endblock %}
+
+          {% block success_code %}
+          {% endblock %}
+          <br>
+          <div class="row">
+            <div class="col-sm-12">
+              <br>
+              {% block success_text %}
+              {% endblock %}
+            </div>
+            <div class="col-sm-12">
+              <br>
+              <a href="/" class="core-success-home"><i class="fa fa-home"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block success_script %}
+{% endblock %}
+
+{% endblock %}

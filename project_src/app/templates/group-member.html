@@ -1,0 +1,149 @@
+{% extends "group.html" %}
+{% block group_content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% if g.user.id==group.manager_id %}
+            <a href="{{ url_for('group_member_add',id=group.id) }}" class="btn btn-default pull-right">邀请成员</a>
+            {% endif %}            
+            <h4>群成员管理</h4>
+            <hr>
+            <ul class="core-userlist">
+                {%for user in users%}
+                <li>
+                    <div class="core-userlist-headphoto">
+                        <a href="/user/{{user['id']}}/dataset" class="core-headphoto-md" style="background-image:url({{url_for('static', filename='img/default-headphoto.png')}}"></a>
+                    </div>
+                    <div class="core-userlist-content">
+                        <a href="/user/{{user['id']}}/dataset" class="core-userlist-name">
+                            {{user['nickname']}}
+                        </a>
+                        <ul class="core-userlist-meta">
+                            <li>
+                                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                {{user['professional']}}
+                            </li>
+                            <li>
+                                <i class="fa fa-certificate" aria-hidden="true"></i>
+                                {{user['expert']}}
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="core-userlist-action">
+                        {%if group.manager_id==g.user.id and user.id!=g.user.id%}
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    群组操作
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <a href="/group/member/remove/{{group.id}}/{{user.id}}">移出群组</a>
+                                    </li>
+                                    <li>
+                                        <a href="/group/member/auth_manager/{{group.id}}/{{user.id}}">将群转让给此用户</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        {%endif%}
+                        <li>    {%if g.user.id!=user.id%}
+                                {% if not g.user.is_following(user) %}
+                                <button class="btn btn-primary" core-follow="follow" user_id="{{ user.id }}">{{ _('关注') }}</button>
+                                {% else %}
+                                <button class="btn btn-default" core-follow="following" user_id="{{ user.id }}">{{ _('正在关注') }}</button>
+                                {% endif %}
+                                {% endif %}
+                        </li>
+                    </ul>
+                </li>
+                {%endfor%}
+            </ul>
+            <!--{%if group.manager_id==g.user.id %}
+            <ul class="core-userlist">
+                {%for user in users%}
+                <li>
+                    <div class="core-userlist-headphoto">
+                        <a href="/user/{{user['id']}}/dataset" class="core-headphoto-md" style="background-image:url({{url_for('static', filename='img/default-headphoto.png')}}"></a>
+                    </div>
+                    <div class="core-userlist-content">
+                        <a href="/user/{{user['id']}}/dataset" class="core-userlist-name">
+                            {{user['nickname']}}
+                        </a>
+                        <ul class="core-userlist-meta">
+                            <li>
+                                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                {{user['professional']}}
+                            </li>
+                            <li>
+                                <i class="fa fa-certificate" aria-hidden="true"></i>
+                                {{user['expert']}}
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {%endfor%}
+            </ul>
+            {%endif%}-->
+        </div>
+</div>
+<script type="text/javascript">
+$("[core-follow=following]").each(function () {
+    $(this).mouseover(function () {
+        $(this).removeClass('btn-default').addClass('btn-danger').text('取消关注');
+    });
+    $(this).mouseleave(function () {
+        $(this).removeClass('btn-danger').addClass('btn-default').text('正在关注');
+    })
+});
+
+$(document).ready(function () {
+    $('[core-follow=following]').on('mouseover', function () {
+        $(this).removeClass('btn-default').addClass('btn-danger').text('取消关注');
+    }).on('mouseleave', function () {
+        $(this).removeClass('btn-danger').addClass('btn-default').text('正在关注');
+    }).on('click', function () {
+        $(this).removeClass('btn-danger').text('正在取消');
+        var userid = $(this).attr('user_id');
+        function getData() {
+            var deleteDataset = $.ajax({
+                url: "/unfollow",
+                async: false,
+                type: 'post',
+                data: {
+                    id: userid
+                },
+                success: function () {
+                    $(this).removeClass('btn-default').addClass('btn-primary').text('关注');
+                    location.reload();
+                }
+            });
+        }
+        getData();
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('[core-follow=follow]').on('click', function () {
+        var userid = $(this).attr('user_id');
+        function getData() {
+            var deleteDataset = $.ajax({
+                url: "/follow",
+                async: false,
+                type: 'post',
+                data: {
+                    id: userid
+                },
+                success: function () {
+                    $(this).removeClass('btn-primary').addClass('btn-default').text('正在关注');
+                    location.reload();
+                }
+            });
+        }
+        getData();
+    });
+})
+</script>
+
+{% endblock %}

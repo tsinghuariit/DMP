@@ -1,0 +1,83 @@
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <h4>平台</h4>
+                        <ul>
+                            <li>
+                                <a href="/datasets">数据管理平台</a>
+                            </li>
+                            <li>
+                                <a href="/core">CORE-中国开放数据资源入口</a>
+                            </li>
+                            <li>
+                                <a href="/bcp">大数据计算服务平台</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <h4>用户服务</h4>
+                        {% if g.user.is_authenticated %}
+                            <ul>
+                                <li>
+                                    <a href="/user/{{g.user.id}}">我的空间</a>
+                                </li>
+                                <li>
+                                    <a href="/edit">个人设置</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/logout">退出登录</a>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <ul>
+                                <li>
+                                    <a href="/register/captcha/sms">注册</a>
+                                </li>
+                                <li>
+                                    <a href="/login">登录</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <h4>沟通交流</h4>
+                        <ul>
+                            <li>
+                                <a href="/about">关于我们</a>
+                            </li>
+                            <li>
+                                <a href="/join">加入我们</a>
+                            </li>
+                            <li>
+                                <a href="/contact">联系方式</a>
+                            </li>
+                            <li>
+                                <a href="/feedback">意见反馈</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12" id="qrcode">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>微信公众号</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <p>
+                                    <img src="{{ url_for('static', filename='img/qrcode-blk.png') }}" alt="">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-bottom:40px">
+                <hr style="border-top-width:1px;">
+                <p>© 2016 清华信息科学与技术国家实验室 - 数据科学创新中心</p>
+            </div>
+        </div>
+    </div>
+</footer>

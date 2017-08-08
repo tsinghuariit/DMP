@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container" id="core-user">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    <li class="active">个人空间</li>
+                </ol>
+            </div>
+            <div class="col-md-3">
+                {% include 'flash.html' %}
+                <div class="panel panel-default" style="margin-top:100px;">
+                    <div class="panel-body">
+                        <div style="margin-top: -115px;">
+                            <div class="core-panel-heading-headphoto core-headphoto-l" style="background-image:url({% if user.avatarsource %}{{ user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %})"></div>
+                            <div class="core-panel-heading-username">{{ user.nickname }}</div>
+                            <div class="core-panel-heading-content">
+                                <ul class="core-user-info">
+                                    <li>
+                                        <i class="fa fa-briefcase" aria-hidden="true"></i>{{user.org}}
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-certificate p-l-1" aria-hidden="true"></i>{{user.expert}}
+                                    </li>
+                                    {% if user.about_me %}
+                                        <li>
+                                            <i class="fa fa-bookmark p-l-2"></i>{{ user.about_me }}
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                                {% if not current_user.is_anonymous %}
+                                    {% if user.id == g.user.id %}
+                                        <a class="btn btn-default" href="{{ url_for('edit_profile') }}">{{ _('编辑我的个人信息') }}</a>
+                                    {% elif not g.user.is_following(user) %}
+                                        <button class="btn btn-primary" core-user-follow="0" core-user-id="{{ user.id }}">{{ _('关注') }}</button>
+                                    {% else %}
+                                        <button class="btn btn-default" core-user-follow="1" core-user-id="{{ user.id }}">{{ _('正在关注') }}</button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if not current_user.is_anonymous %}
+                    {% if user.id == g.user.id %}
+                        <ul class="nav core-user-nav" id="core-user-nav">
+                            <li {% if request.path==url_for( 'user_activity',id=g.user.id) %} class="active" {% endif %}>
+                                <a href="{{ url_for('user_activity',id=user.id) }}">
+                                    <i class="fa fa-heartbeat"></i>动态</a>
+                            </li>
+                            <li
+                                {% if request.path==url_for( 'user_dataset',id=g.user.id) or request.path==url_for( 'user_datasetfav',id=g.user.id) or request.path==url_for( 'user_auth',id=g.user.id) or request.path==url_for( 'user_authby',id=g.user.id) %}
+                                class="active"
+                                {% endif %}>
+                                <a href="{{ url_for('user_dataset',id=user.id) }}">
+                                    <i class="fa fa-database p-l-2"></i>数据集<label class="hidden">{{ user.dataset_creat_count() }}</label>
+                                </a>
+                            </li>
+                            <li {% if request.path==url_for( 'user_following',id=g.user.id) or request.path==url_for( 'user_follower',id=g.user.id) %} class="active" {% endif %}>
+                                <a href="{{ url_for('user_following',id=user.id) }}">
+                                    <i class="fa fa-user-circle-o"></i>关注<label class="hidden">{{ user.followed.count() }}</label>
+                                </a>
+                            </li>
+                            <li {% if request.path==url_for( 'user_group',id=g.user.id) or request.path==url_for( 'user_joinedgroup',id=user.id) %} class="active" {% endif %}>
+                                <a href="{{ url_for('user_group',id=user.id) }}">
+                                    <i class="fa fa-group"></i>群组</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-body p-l-0 p-r-0">
+                        {% if not current_user.is_anonymous %}
+                            {% if user.id == g.user.id %}
+                                <div class="core-panel-heading">
+                                    {% if request.path == url_for('user', id = g.user.id)or request.path == url_for('user_activity', id = g.user.id) %}
+                                        <h4>动态</h4>
+                                        <hr>
+                                    {% endif %}
+                                    {% if request.path == url_for('user_dataset', id = g.user.id)or request.path == url_for('user_datasetfav', id = g.user.id)or request.path == url_for('user_auth', id = g.user.id)or request.path == url_for('user_authby', id = g.user.id) %}
+                                        <a href="/datasets/add" class="btn btn-default pull-right">创建数据集</a>
+                                        <h4>数据集</h4>
+                                    {% endif %}
+                                    {% if request.path == url_for('user_following', id = g.user.id)or request.path == url_for('user_follower', id = g.user.id) %}
+                                        <h4>关注</h4>
+                                    {% endif %}
+                                    {% if request.path == url_for('user_group', id = g.user.id)or request.path == url_for('user_joinedgroup', id = user.id) %}
+                                        <a href="/group/add" class="btn btn-default pull-right">创建群组</a>
+                                        <h4>群组</h4>
+                                    {% endif %}
+                                </div>
+                                {% if not request.path == url_for('user_activity', id = g.user.id)and not request.path == url_for('user', id = g.user.id) %}
+                                    <div class="core-panel-menu" id="core-panel-menu">
+                                        <ul>
+                                            {% if request.path == url_for('user_dataset', id = g.user.id)or request.path == url_for('user_datasetfav', id = g.user.id)or request.path == url_for('user_auth', id = g.user.id)or request.path == url_for('user_authby', id = g.user.id) %}
+                                                <li {% if request.path==url_for( 'user_dataset',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_dataset',id=user.id) }}">我的数据集<label>{{ user.dataset_creat_count() }}</label>
+                                                    </a>
+                                                </li>
+                                                <li {% if request.path==url_for( 'user_datasetfav',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_datasetfav',id=user.id) }}">我关注的数据集<label>{{ user.datasets_following.count() }}</label>
+                                                    </a>
+                                                </li>
+                                                <li {% if request.path==url_for( 'user_auth',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_auth',id=user.id) }}">我的数据集授权
+                                                    </a>
+                                                </li>
+                                                <li {% if request.path==url_for( 'user_authby',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_authby',id=user.id) }}">我获得的数据集授权
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if request.path == url_for('user_following', id = g.user.id)or request.path == url_for('user_follower', id = g.user.id) %}
+                                                <li {% if request.path==url_for( 'user_following',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_following',id=user.id) }}">我关注的用户<label>{{ user.followed.count() }}</label>
+                                                    </a>
+                                                </li>
+                                                <li {% if request.path==url_for( 'user_follower',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_follower',id=user.id) }}">关注我的用户<label>{{ user.followers.count() }}</label>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if request.path == url_for('user_group', id = g.user.id)or request.path == url_for('user_joinedgroup', id = g.user.id) %}
+                                                <li {% if request.path==url_for( 'user_group',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_group',id=user.id) }}">我管理的群组</a>
+                                                </li>
+                                                <li {% if request.path==url_for( 'user_joinedgroup',id=g.user.id) %} class="active" {% endif %}>
+                                                    <a href="{{ url_for('user_joinedgroup',id=user.id) }}">我加入的群组</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        {% if not current_user.is_anonymous %}
+                            <div class="core-panel-body p-l-15 p-r-15 p-b-15" {% if request.path == url_for( 'user_activity', id=g.user.id) %} style="padding-top:0;" {% endif %}>
+                            {% endif %}
+                            {% block profile_content %}{% endblock %}
+                            {% if not current_user.is_anonymous %}
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#core-user').delegate('[core-dataset-follow=0]', 'click', function () {
+                                            var button = $(this);
+                                            var datasetID = $(this).attr('core-dataset-id');
+                                            var menuCount = $('.core-panel-menu li.active label').text();
+                                            var toFollow = $.ajax({
+                                                url: "/follow_dataset",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: datasetID
+                                                },
+                                                success: function () {
+                                                    button.attr({'core-dataset-follow': '1', 'data-original-title': '取消关注数据集'});
+                                                    button.find('i').removeClass('fa-star-o').addClass('fa-star');
+                                                    $('.core-panel-menu li.active label').text(parseInt(menuCount) + 1);
+                                                }
+                                            });
+                                        })
+
+                                        $('#core-user').delegate('[core-dataset-follow=1]', 'click', function () {
+                                            var button = $(this);
+                                            var datasetID = $(this).attr('core-dataset-id');
+                                            var menuCount = $('.core-panel-menu li.active label').text();
+                                            var unFollow = $.ajax({
+                                                url: "/unfollow_dataset",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: datasetID
+                                                },
+                                                success: function () {
+                                                    button.attr({'core-dataset-follow': '0', 'data-original-title': '关注数据集'});
+                                                    button.find('i').removeClass('fa-star').addClass('fa-star-o');
+                                                    $('.core-panel-menu li.active label').text(parseInt(menuCount) - 1);
+                                                }
+                                            });
+                                        })
+                                        $('.core-userlist-action, .core-panel-heading-content, .core-activity-timeline').delegate('[core-user-follow=0]', 'click', function () {
+                                            var button = $(this);
+                                            var userID = $(this).attr('core-user-id');
+                                            var menuCount = $('.core-panel-menu li.active label').text();
+                                            var toFollow = $.ajax({
+                                                url: "/follow",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: userID
+                                                },
+                                                success: function () {
+                                                    button.text('取消关注').removeClass('btn-danger btn-primary').addClass('btn-default').attr('core-user-follow', '1');
+                                                    $('.core-panel-menu li.active label').text(parseInt(menuCount) + 1);
+                                                }
+                                            });
+                                        })
+
+                                        $('.core-userlist-action, .core-panel-heading-content, .core-activity-timeline').delegate('[core-user-follow=1]', {
+                                            mouseover: function () {
+                                                $(this).text('取消关注').removeClass('btn-primary').addClass('btn-danger');
+                                            },
+                                            mouseleave: function () {
+                                                $(this).text('正在关注').removeClass('btn-danger').addClass('btn-default');
+                                            },
+                                            click: function () {
+                                                var button = $(this);
+                                                var userID = $(this).attr('core-user-id');
+                                                var menuCount = $('.core-panel-menu li.active label').text();
+                                                var unFollow = $.ajax({
+                                                    url: "/unfollow",
+                                                    async: false,
+                                                    type: 'post',
+                                                    data: {
+                                                        id: userID
+                                                    },
+                                                    success: function () {
+                                                        button.text('关注').removeClass('btn-danger btn-default').addClass('btn-primary').attr('core-user-follow', '0');
+                                                        $('.core-panel-menu li.active label').text(parseInt(menuCount) - 1);
+                                                    }
+                                                });
+                                            }
+                                        })
+                                    })
+                                </script>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block tpl_script %}
+    <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#core-user-nav").sticky({topSpacing: 0});
+            $("#core-panel-menu").sticky({topSpacing: 0});
+        });
+    </script>
+{% endblock %}

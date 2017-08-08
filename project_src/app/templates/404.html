@@ -1,0 +1,14 @@
+{% extends "error.html" %}
+
+{% block error_icon %}
+<i class="fa fa-desktop text-primary"></i>
+{% endblock %}
+
+{% block error_code %}
+<h1>{{ _('Error 404') }}</h1>
+<h3>{{ _('该页无法显示<br>Page Not Found') }}</h3>
+{% endblock %}
+
+{% block error_text %}
+<p>访问的内容不存在，您可以尝试搜索数据集</p>
+{% endblock %}

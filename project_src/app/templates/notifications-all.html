@@ -1,0 +1,194 @@
+{% extends "notifications.html" %}
+
+{% block notifications_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="core-activity">
+                <p>2017 年 2 月 15 日</p>
+                <ul class="core-activity-timeline">
+                    <li class="core-activity-newdataset">
+                        <div class="core-activity-content">
+                            <div class="left pull-left">
+                                <div class="core-activity-indicate"></div>
+                                <div class="core-activity-time">13:14</div>
+                            </div>
+                            <div class="right">
+                                <ul class="core-activity-headphoto pull-left">
+                                    <li><img class="" src="{% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt=""></li>
+                                </ul>
+                                <div class="core-activity-text">
+                                    <ul class="core-activity-userlist">
+                                        <li>
+                                            <a href="1">user1</a>
+                                        </li>
+                                    </ul>
+                                    拒绝您使用数据集
+                                    <a href="">全国主要城市空气质量数据 PM2.5</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="core-activity-newdataset">
+                        <div class="core-activity-content">
+                            <div class="left pull-left">
+                                <div class="core-activity-indicate"></div>
+                                <div class="core-activity-time">13:14</div>
+                            </div>
+                            <div class="right">
+                                <ul class="core-activity-headphoto pull-left">
+                                    <li><img class="" src="{% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt=""></li>
+                                </ul>
+                                <div class="core-activity-text">
+                                    <ul class="core-activity-userlist">
+                                        <li>
+                                            <a href="1">user1</a>
+                                        </li>
+                                    </ul>
+                                    允许您使用数据集
+                                    <a href="">全国主要城市空气质量数据 PM2.5</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="core-activity-newdataset">
+                        <div class="core-activity-content">
+                            <div class="left pull-left">
+                                <div class="core-activity-indicate"></div>
+                                <div class="core-activity-time">13:14</div>
+                            </div>
+                            <div class="right">
+                                <ul class="core-activity-headphoto pull-left">
+                                    <li><img class="" src="{% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt=""></li>
+                                </ul>
+                                <div class="core-activity-text">
+                                    <ul class="core-activity-userlist">
+                                        <li>
+                                            <a href="1">user1</a>
+                                        </li>
+                                    </ul>
+                                    邀请您使用数据集
+                                    <a href="">全国主要城市空气质量数据 PM2.5</a>
+                                </div>
+                                <div >
+                                    <button class="btn btn-primary" core-apply="yes">同意</button>
+                                    <button class="btn btn-default" core-apply="no">拒绝</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="core-activity-newdataset">
+                        <div class="core-activity-content" role="button" data-toggle="collapse" href="#collapse2">
+                            <div class="left pull-left">
+                                <div class="core-activity-indicate"></div>
+                                <div class="core-activity-time">13:13</div>
+                            </div>
+                            <div class="right">
+                                <ul class="core-activity-headphoto pull-left">
+                                    <li><img class="" src="{% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt=""></li>
+                                </ul>
+                                <div class="core-activity-text">
+                                    <ul class="core-activity-userlist">
+                                        <li>
+                                            <a href="1">user1</a>
+                                        </li>
+                                        <li>
+                                            <a href="2">user2</a>
+                                        </li>
+                                        <li>
+                                            <a href="3">user3</a>
+                                        </li>
+                                    </ul>
+                                    等 5 位用户申请使用您的数据集
+                                    <a href="">全国主要城市空气质量数据 PM2.5</a>
+                                </div>
+                                <div class="core-active-collapse text-center">
+                                    <i class="fa fa-angle-double-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="collapse2" class="core-activity-action panel-collapse collapse" role="tabpanel">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <ul class="core-userlist">
+                                        <li>
+                                            <div class="core-userlist-headphoto">
+                                                <a href="/user/dataset"><img src="{{ url_for('static', filename='img/default-headphoto.png') }}" alt=""></a>
+                                            </div>
+                                            <div class="core-userlist-content">
+                                                <a href="/user/dataset" class="core-userlist-name">user['nickname']</a>
+                                                <ul class="core-userlist-meta">
+                                                    <li>
+                                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                                        user['professional']</li>
+                                                    <li>
+                                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                                        user['expert']</li>
+                                                </ul>
+                                            </div>
+                                            <div class="core-userlist-action">
+                                                <button class="btn btn-primary" core-apply="yes">同意</button>
+                                                <button class="btn btn-default" core-apply="no">拒绝</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="core-userlist-headphoto">
+                                                <a href="/user/dataset"><img src="{{ url_for('static', filename='img/default-headphoto.png') }}" alt=""></a>
+                                            </div>
+                                            <div class="core-userlist-content">
+                                                <a href="/user/dataset" class="core-userlist-name">user['nickname']</a>
+                                                <ul class="core-userlist-meta">
+                                                    <li>
+                                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                                        user['professional']</li>
+                                                    <li>
+                                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                                        user['expert']</li>
+                                                </ul>
+                                            </div>
+                                            <div class="core-userlist-action">
+                                                <button class="btn btn-primary" core-apply="yes">同意</button>
+                                                <button class="btn btn-default" core-apply="no">拒绝</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="core-profile-empty"><p>目前还没有任何活动</p></div> -->
+    <script type="text/javascript">
+        $('[core-apply]').on('click', function () {
+            switch ($(this).attr('core-apply')) {
+                case 'yes':
+                    $(this).removeClass('btn-primary').addClass('btn-default').attr('core-apply', 'undoyes').text('撤销同意');
+                    $(this).parent().find('[core-apply=no]').hide();
+                    break;
+                case 'no':
+                    $(this).attr('core-apply', 'undono').text('撤销拒绝');
+                    $(this).parent().find('[core-apply=yes]').hide();
+                    break;
+                case 'undoyes':
+                    $(this).removeClass('btn-default').addClass('btn-primary').attr('core-apply', 'yes').text('同意');
+                    $(this).parent().find('[core-apply=no]').show();
+                    break;
+                case 'undono':
+                    $(this).attr('core-apply', 'no').text('拒绝');
+                    $(this).parent().find('[core-apply=yes]').show();
+                    break;
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        $('[data-toggle=collapse] a', function (e) {
+            e.stopPropagation;
+        }).click(function (e) {
+            e.stopPropagation;
+            var link = $(this).attr('href');
+            window.open(link);
+        });
+    </script>
+{% endblock %}

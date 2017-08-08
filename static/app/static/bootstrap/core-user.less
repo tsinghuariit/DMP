@@ -1,0 +1,189 @@
+.core-user-info {
+  margin-top: 10px;
+
+  > li {
+    margin-bottom: 5px;
+    color: @gray-light;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    i {
+      width: 15px;
+      color: darken(@gray-lighter,20%);
+      margin-right: 5px;
+    }
+  }
+}
+
+.core-userlist {
+  > li {
+    // display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+
+  .core-userlist-headphoto {
+    .pull-left;
+    clear: both;
+
+    img {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  .core-userlist-content {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+  }
+
+  .core-userlist-name {
+    display: block;
+    font-size: 21px;
+    margin-bottom: 10px;
+    color: #555;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .core-userlist-meta {
+    > li {
+      display: inline;
+      margin-right: 15px;
+
+      .fa {
+        color: darken(@gray-lighter,10%);
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .core-userlist-action {
+    .pull-right;
+    padding: 15px 0;
+    margin-left: auto;
+    text-align: right;
+
+    > li {
+      display: inline-block;
+    }
+  }
+
+  .panel-collapse {
+    margin-top: 15px;
+  }
+}
+
+.core-userlist-lite {
+  > li {
+    width: 31%;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    > div {
+      padding: 5px;
+      vertical-align: middle;
+      border: 1px solid #ccc;
+      border-radius: @border-radius-base;
+
+      &:hover {
+        cursor: pointer;
+        background-color: @gray-lighter;
+      }
+
+      &.active {
+        border-color: @brand-primary;
+        color: @brand-primary;
+      }
+
+      .core-userlist-lite-name {
+        display: inline-block;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+@media (max-width: @screen-xs-max) {
+  .core-userlist-lite {
+    > li {
+      width: 100%;
+    }
+  }
+}
+
+.core-datasetlist {
+  margin-bottom: 0;
+
+  > li {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  .core-datasetlist-content {
+    display: inline-block;
+  }
+
+  .core-datasetlist-action {
+    .pull-right;
+    display: inline-block;
+  }
+}
+
+.core-activty {
+  padding-top: 15px;
+}
+
+.core-userselect {}
+
+.core-userselect-menu {
+  li {
+    padding: 10px 15px;
+
+    &.active,
+    &:hover {
+      background-color: #eee;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.core-userselect-display {
+  > .row {
+    border-left: 1px solid #eee;
+  }
+
+  .core-userlist-lite {
+    border: 1px solid #eee;
+  }
+}

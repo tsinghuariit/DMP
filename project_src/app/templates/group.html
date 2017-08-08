@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container core-group">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    <li class="active">群组</li>
+                </ol>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="core-headphoto-lg" style="background-image:url({% if group.avatarsource %}{{ group.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %});"></div>
+                        <h4 class="core-group-name">{{group.name}}</h4>
+                        <p class="core-group-desc">{{group.introduction}}</p>
+                        {% if group.manager_id==g.user.id %}
+                        <a href="{{url_for('group_edit',id=group.id)}}" class="btn btn-block btn-default">编辑</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <label>群主</label>
+                        <div class="core-group-owner" id="core-group-owner" href="/user/{{ group.manager_id}}/dataset">
+                            <div class="core-headphoto-md" style="background-image:url({% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %});"></div>
+                            <div>
+                                <p class="core-group-owner-name">{{ group.manager.nickname }}</p>
+                                <ul class="core-group-owner-meta">
+                                    <li>
+                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                        {{ group.manager.professional }}</li>
+                                    <li>
+                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                        {{ group.manager.expert }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            $('#core-group-owner').on('click', function () {
+                                var url = $(this).attr('href');
+                                window.location.href = url;
+                            })
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ul class="core-group-stat">
+                                    <li {% if request.path==url_for('group_dataset',id=group.id) %} class="active" {% endif %}>
+                                        <a href="{{url_for('group_dataset',id=group.id)}}">
+                                            <h5>数据集</h5>
+                                            <p>{{group.dataset_nums()}}
+                                                <small>个</small>
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li {% if request.path==url_for('group_member',id=group.id) %} class="active" {% endif %}>
+                                        <a href="{{url_for('group_member',id=group.id)}}">
+                                            <h5>群人数</h5>
+                                            <p>{{group.user_nums()}}
+                                                <small>人</small>
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <h5>主要研究学科</h5>
+                                        <ul>
+                                            {% for g,v in group.all_datasets_main_subject().items() %}
+                                                <label class="label label-default">{{ g }}{{ v }}</label>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="core-group-action pull-right">
+                                    <li>
+                                        {% if g.user.in_group(group)==1 %}
+                                        <a class="btn btn-primary" core-group-follow=0 href="/group/member/apply/{{group.id}}">加入</a>
+                                        {% elif g.user.in_group(group)==2  %}
+                                        <button class="btn btn-primary" core-group-follow=2 >已申请</button>
+                                        {% elif g.user.in_group(group)==3 and g.user.id!=group.manager_id %}
+                                        <button class="btn btn-default" core-group-follow=1 >已加入</button>
+                                        <a class="btn btn-primary" core-group-follow=0 href="/group/member/exit/{{group.id}}">退出群组</a>
+                                        {% elif g.user.in_group(group)==4  %}
+                                        <a class="btn btn-primary" core-group-follow=0 href="/group/member/apply/{{group.id}}">重新加入</a>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $('#core-user').delegate('[core-dataset-follow=0]', 'click', function () {
+                                            var button = $(this);
+                                            var datasetID = $(this).attr('core-dataset-id');
+                                            var menuCount = $('li.active label').text();
+                                            var toFollow = $.ajax({
+                                                url: "/follow_dataset",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: datasetID
+                                                },
+                                                success: function () {
+                                                    button.attr({'core-dataset-follow': '1', 'data-original-title': '取消关注数据集'});
+                                                    button.find('i').removeClass('fa-star-o').addClass('fa-star');
+                                                    $('li.active label').text(parseInt(menuCount) + 1);
+                                                }
+                                            });
+                                        })
+
+                                        $('#core-user').delegate('[core-dataset-follow=1]', 'click', function () {
+                                            var button = $(this);
+                                            var datasetID = $(this).attr('core-dataset-id');
+                                            var menuCount = $('li.active label').text();
+                                            var unFollow = $.ajax({
+                                                url: "/unfollow_dataset",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: datasetID
+                                                },
+                                                success: function () {
+                                                    button.attr({'core-dataset-follow': '0', 'data-original-title': '关注数据集'});
+                                                    button.find('i').removeClass('fa-star').addClass('fa-star-o');
+                                                    $('li.active label').text(parseInt(menuCount) - 1);
+                                                }
+                                            });
+                                        })
+                                        $('.core-userlist-action, .core-panel-heading').delegate('[core-user-follow=0]', 'click', function () {
+                                            var button = $(this);
+                                            var userID = $(this).attr('core-user-id');
+                                            var menuCount = $('li.active label').text();
+                                            var toFollow = $.ajax({
+                                                url: "/follow",
+                                                async: false,
+                                                type: 'post',
+                                                data: {
+                                                    id: userID
+                                                },
+                                                success: function () {
+                                                    button.text('取消关注').removeClass('btn-danger btn-primary').addClass('btn-default').attr('core-user-follow', '1');
+                                                    $('li.active label').text(parseInt(menuCount) + 1);
+                                                }
+                                            });
+                                        })
+
+                                        $('.core-userlist-action, .core-panel-heading').delegate('[core-user-follow=1]', {
+                                            mouseover: function () {
+                                                $(this).text('取消关注').removeClass('btn-primary').addClass('btn-danger');
+                                            },
+                                            mouseleave: function () {
+                                                $(this).text('正在关注').removeClass('btn-danger').addClass('btn-default');
+                                            },
+                                            click: function () {
+                                                var button = $(this);
+                                                var userID = $(this).attr('core-user-id');
+                                                var menuCount = $('li.active label').text();
+                                                var unFollow = $.ajax({
+                                                    url: "/unfollow",
+                                                    async: false,
+                                                    type: 'post',
+                                                    data: {
+                                                        id: userID
+                                                    },
+                                                    success: function () {
+                                                        button.text('关注').removeClass('btn-danger btn-default').addClass('btn-primary').attr('core-user-follow', '0');
+                                                        $('li.active label').text(parseInt(menuCount) - 1);
+                                                    }
+                                                });
+                                            }
+                                        })
+                                    })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        {% block group_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="core-filter-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="core-filter-modal-label">筛选器</h4>
+                </div>
+                <div class="modal-body" id="core-filter-m"></div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

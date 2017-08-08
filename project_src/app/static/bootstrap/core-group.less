@@ -1,0 +1,124 @@
+.core-group {
+    .panel-body {
+        a h5,
+        h5 {
+            color: lighten(@gray-light,10%);
+            margin-top: 5px;
+            font-weight: normal;
+        }
+    }
+}
+
+.core-group-desc{
+  color: lighten(@gray-light,10%);
+}
+.core-group-owner {
+    margin-top: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+
+    > div {
+        display: inline-block;
+        vertical-align: top;
+
+        &:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    .core-group-owner-name {
+        display: block;
+        font-size: 18px;
+        line-height: 24px;
+        margin-top: -5px;
+        margin-bottom: 5px;
+        color: #555;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .core-group-owner-meta {
+        > li {
+            margin-right: 15px;
+            font-size: 0.95em;
+            margin-bottom: 3px;
+            color: lighten(@gray-light, 5%);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .fa {
+                color: darken(@gray-lighter,10%);
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.core-group-stat {
+    display: inline-block;
+    margin-bottom: 0;
+
+    > li {
+        display: inline-block;
+        padding: 0 15px;
+        border-right: 1px solid #eee;
+        vertical-align: top;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            border-right: none;
+        }
+
+        &.active {
+            h5,
+            p,
+            small {
+                color: @brand-primary;
+            }
+        }
+
+        a p,
+        p {
+            color: @gray;
+            font-size: 32px;
+            margin-bottom: 0;
+
+            small {
+                color: darken(@gray-lighter,20%);
+                font-size: 14px;
+                font-weight: normal;
+            }
+        }
+
+        a {
+            &:active,
+            &:focus,
+            &:hover {
+                text-decoration: none;
+
+                h5,
+                p,
+                small {
+                    color: @brand-primary;
+                }
+            }
+        }
+
+        > ul {
+            > li {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.core-group-action {
+    display: inline-block;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="Resource-type" content="Document" />
+
+
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.css" />
+  <script src="/static/jquery.min.js"></script>
+  <script src="/static/bootstrap.min.js"></script>
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  var console = { log: function() {} };
+</script>
+<![endif]-->
+
+</head>
+
+<body>
+  <nav class="core-navsearch">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="core-nav-logo">
+            <a href="/" onclick="window.history.back();"><img src="/static/img/logo.png" alt=""></a>
+          </div>
+          <div class="pull-right hidden-md hidden-lg"><a href="/login" class="btn btn-primary">注册登录</a></div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="core-nav-search">
+                <div class="input-group">
+                  {% if search %}
+                  <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value="{{search}}"> {% else %}
+                  <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value=""> {% endif %}
+                  <span class="input-group-btn"><button class="btn btn-primary" type="button" onclick="location.href='/dataset/search?search='+$('#core-search-box').val()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="core-nav-right hidden-xs hidden-sm pull-right">
+            <!-- <a href="" class="btn btn-link">关于我们</a> -->
+            <a href="/login" class="btn btn-primary">注册登录</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% include tpl %}
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-4">
+              <h4>中国开放资源入口</h4>
+              <ul>
+                <li>
+                  <a href="">科研数据平台</a>
+                </li>
+                <li>
+                  <a href="">机构</a>
+                </li>
+                <li>
+                  <a href="">群组</a>
+                </li>
+                <li>
+                  <a href="">关于我们</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-4">
+              <h4>用户服务</h4>
+              <ul>
+                <li><a href="">注册</a></li>
+                <li><a href="">登录</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-4">
+              <h4>联系我们</h4>
+              <ul>
+                <li><a href="">合作洽谈</a></li>
+                <li><a href="">问题反馈</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12" id="qrcode">
+              <div class="row">
+                <div class="col-md-12">
+                  <h4>微信公众号</h4></div>
+                  <div class="col-md-12">
+                    <p>
+                      <img src="/static/img/qrcode.png" alt="">
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12" style="padding-bottom:40px">
+            <hr style="border-top-width:3px;">
+            <p>© 2016 清华信息科学与技术国家实验室 - 数据科学创新中心</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+
+</html>

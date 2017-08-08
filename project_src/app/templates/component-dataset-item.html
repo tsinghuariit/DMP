@@ -1,0 +1,67 @@
+<li>
+    <div class="core-dataset-item core-dataset-item-primary">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="core-dataset-title">
+                    <a href="/datasets/item/{{ dataset['udi'] }}">{{ dataset['title'] }}</a>
+                    {% if not current_user.is_anonymous and not current_user.id == dataset['author'].id %}
+                        {% if current_user.is_following_dataset(dataset) %}
+                            <a data-toggle="tooltip" data-placement="top" title="取消关注数据集" core-dataset-follow="1" core-dataset-id="{{ dataset['udi'] }}">
+                                <i class="fa fa-star"></i>
+                            </a>
+                        {% else %}
+                            <a data-toggle="tooltip" data-placement="top" title="关注数据集" core-dataset-follow="0" core-dataset-id="{{ dataset['udi'] }}">
+                                <i class="fa fa-star-o"></i>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <ul class="core-dataset-info">
+                    <li class="core-dataset-meta-author">
+                        <a href="/user/{{ dataset['author'].id }}/dataset">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>{{ dataset['author'].nickname }}</a>
+                    </li>
+                    <li class="core-dataset-meta-pubtime">
+                        <a href="/datasets/item/{{ dataset['udi'] }}">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>发布于
+                            {{ dataset['published'] }}</a>
+                    </li>
+                    <li class="core-dataset-meta-udi">
+                        <a href="/datasets/item/{{ dataset['udi'] }}">
+                            <i class="fa fa-check-square-o text-primary"></i>
+                            <span class="text-primary" id="core-detail-udi">udi:{{ dataset['udi'] }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="core-dataset-desc">
+                    <p>
+                        {{ dataset['desc'] }}
+                    </p>
+                </div>
+            </div>
+            {#<div class="col-sm-2">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-4">
+                        <button class="btn btn-link">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <a href="/datasets/item/{{ dataset['udi'] }}/preview">在线预览</a>
+                        </button>
+                    </div>
+                                        <div class="col-sm-12 col-xs-4">
+                                            <button class="btn btn-link">
+                                                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                                <a href="/datasets/item/{{ dataset['udi'] }}/analysis">数据分析</a>
+                                            </button>
+                                        </div>
+                    <div class="col-sm-12 col-xs-4">
+                        <button class="btn btn-link">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </span>
+                        <a href="/datasets/item/{{ dataset['udi'] }}/download">数据下载</a>
+                    </button>
+                </div>
+            </div>
+        </div>#}
+    </div>
+</div>
+</li>

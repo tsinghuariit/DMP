@@ -1,0 +1,63 @@
+{% extends "about.html" %}
+{% block about_content %}
+<div class="col-md-7">
+  <div class="core-about-content">
+    <h3>用大数据助力科研的年轻人</h3>
+    <hr>
+    <p>成立于 2016 年，CORE 团队致力于为高校提供创新的大数据科研解决方案。</p>
+    <p>我们的每位成员都对大数据科研有着自己的理解与追求，大家为了共同的目标而走到了一起，为追求产品品质而不懈努力。</p>
+
+  </div>
+</div>
+<div class="col-md-7" style="display:none;">
+  <ul class="row core-about-team">
+    <li class="col-md-12">
+      <h3>管理团队</h3>
+    </li>
+    <li class="col-lg-6">
+      <div class="core-about-team-photo">
+        <img src="{{ url_for('static', filename='img/default-headphoto.png') }}" alt="">
+      </div>
+      <div class="core-about-team-content">
+        <h4>CEO</h4>
+        <p class="core-about-team-icon"><i class="fa fa-map-marker"></i>Chief Executive Officer</p>
+        <p>大家快来用我们的产品</p>
+      </div>
+    </li>
+    <li class="col-lg-6">
+      <div class="core-about-team-photo">
+        <img src="{{ url_for('static', filename='img/default-headphoto.png') }}" alt="">
+      </div>
+      <div class="core-about-team-content">
+        <h4>CTO</h4>
+        <p class="core-about-team-icon"><i class="fa fa-map-marker"></i>Chief Technology Officer</p>
+        <p>我们的产品没有 Bug</p>
+      </div>
+    </li>
+    <li class="col-md-12">
+      <h3>开发团队</h3>
+    </li>
+    <li class="col-md-4 col-xs-6">
+      <div class="core-about-team-content">
+        <h4>后端</h4>
+        <p class="core-about-team-icon"><i class="fa fa-map-marker"></i>Python 工程师</p>
+        <p>Python 是最好的，不是 PHP</p>
+      </div>
+    </li>
+    <li class="col-md-4 col-xs-6">
+      <div class="core-about-team-content">
+        <h4>前端</h4>
+        <p class="core-about-team-icon"><i class="fa fa-map-marker"></i>前端开发工程师</p>
+        <p>我用 Javascript</p>
+      </div>
+    </li>
+    <li class="col-md-4 col-xs-6">
+      <div class="core-about-team-content">
+        <h4>测试</h4>
+        <p class="core-about-team-icon"><i class="fa fa-map-marker"></i>可用性测试员</p>
+        <p>产品无可挑剔</p>
+      </div>
+    </li>
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width,initial-scale=1" name="viewport">
+        <title></title>
+        <meta name="description" content=""/>
+        <meta name="keywords" content=""/>
+        <meta name="Resource-type" content="Document"/>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}"/>
+        <!--[if IE]> <script type="text/javascript"> var console = { log: function() {} }; </script> <![endif]-->
+        <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='jquery-ui.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    </head>
+    <body>
+        <section id="dcp-logo">
+            <div class="container">
+                <div class="dcp-logo">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                </div>
+            </div>
+        </section>
+        <section id="dcp-login" class="core-log">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                      <img id="dcp-svg" src="{{ url_for('static', filename='img/dcp.svg') }}" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

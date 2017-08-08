@@ -1,0 +1,14 @@
+{% extends "error.html" %}
+
+{% block error_icon %}
+<i class="fa fa-server text-primary"></i>
+{% endblock %}
+
+{% block error_code %}
+<h1>{{ _('Error 500') }}</h1>
+<h3>{{ _('服务器内部错误<br>Internal Server Error') }}</h3>
+{% endblock %}
+
+{% block error_text %}
+<p>服务器出错了，您可以<a href="/contact">联系我们</a>或尝试搜索数据集</p>
+{% endblock %}

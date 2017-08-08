@@ -1,0 +1,26 @@
+{% extends "a.html" %}
+
+{% block about_hero %}
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb hidden-xs hidden-sm">
+      <li><a href="/">首页</a></li>
+      <li class="active">关于</li>
+    </ol>
+  </div>
+  <div class="col-md-12">
+    <h4>ABOUT US</h4>
+    <h2>关于我们</h2>
+  </div>
+</div>
+<ul class="core-about-menu">
+  <li {% if request.path==url_for('about') %}class="active"{% endif %}><a href="/about">CORE</a></li>
+  <li {% if request.path==url_for('about_lab') %}class="active"{% endif %}><a href="/about/lab">国家实验室</a></li>
+  <!-- <li {% if request.path==url_for('about_center') %}class="active"{% endif %}><a href="/about/center">数据创新中心</a></li> -->
+  <li {% if request.path==url_for('about_team') %}class="active"{% endif %}><a href="/about/team">团队</a></li>
+</ul>
+{% endblock %}
+
+{% block about_content %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    <li class="active">数据集管理</li>
+                </ol>
+            </div>
+            <div class="col-md-3">
+                <ul class="nav core-user-nav">
+                    <li {% if request.path.find('edit') > 0 %} class="active" {% endif %}>
+                        <a href="/datasets/edit/{{dataset.udi}}">更新数据集</a>
+                    </li>
+                    {% if dataset['authority_id'] > 10004 %}
+                        <li {% if request.path.find('auth') > 0 %} class="active" {% endif %}>
+                            <a href="/datasets/item/{{ dataset['udi'] }}/auth">数据集授权管理</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-md-9">
+                {% include 'flash.html' %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% block dataset_edit %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

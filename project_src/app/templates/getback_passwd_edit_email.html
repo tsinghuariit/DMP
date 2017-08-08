@@ -1,0 +1,34 @@
+{% extends "base-clear.html" %}
+
+{% block content %}
+
+<div class="container core-log">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="core-log-title">修改密码</p>
+            </div>
+            <div class="col-sm-12">{% include 'flash.html' %}</div>
+            <div class="col-sm-12">
+              <form action="/user/password/getback/email" method="POST">
+                <div class="form-group">
+                  {{ form.new_passwd(class="form-control",id="new_passwd",placeholder="新密码")}}</div>
+                  <div class="form-group">
+                    {{ form.confirm_passwd(class="form-control",id="confirm_passwd",placeholder="确认新密码")}}
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="core-forget-confirm-edit">确认修改密码</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

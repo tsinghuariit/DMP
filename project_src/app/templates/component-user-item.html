@@ -1,0 +1,21 @@
+<li>
+  <div class="core-userlist-headphoto">
+    <a href="/user/{{ user['id'] }}/dataset" class="core-headphoto-md" style="background-image:url({% if user.avatarsource %}{{ user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %})"></a>
+  </div>
+  <div class="core-userlist-content">
+    <a href="/user/{{ user['id'] }}/dataset" class="core-userlist-name">{{ user['nickname'] }}</a>
+    <ul class="core-userlist-meta">
+      <li><i class="fa fa-briefcase" aria-hidden="true"></i> {{ user['professional'] }}</li>
+      <li><i class="fa fa-certificate" aria-hidden="true"></i> {{ user['expert'] }}</li>
+    </ul>
+  </div>
+  <ul class="core-userlist-action">
+    <li>
+      {% if not g.user.is_following(user) %}
+      <button class="btn btn-primary" core-user-follow="0" core-user-id="{{ user.id }}">{{ _('关注') }}</button>
+      {% else %}
+      <button class="btn btn-default" core-user-follow="1" core-user-id="{{ user.id }}">{{ _('正在关注') }}</button>
+      {% endif %}
+    </li>
+  </ul>
+</li>

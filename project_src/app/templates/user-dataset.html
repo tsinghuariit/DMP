@@ -1,0 +1,41 @@
+{% extends "user.html" %}
+
+{% block profile_content %}
+    {% if not user.dataset_creat_count() %}
+        <div class="core-empty">
+            <div class="core-empty-icon">
+                <i class="fa fa-database"></i>
+            </div>
+            <div class="core-empty-info">还未创建过数据集</div>
+            <div class="core-empty-desc">
+                <span role="button" data-toggle="popover" data-trigger="hover focus">您还可以通过右上角的快捷菜单创建数据集
+                    <i class="fa fa-question-circle-o text-primary"></i>
+                </span>
+                <div class="hidden" id="desc-img"><img class="img-responsive" src="{{ url_for('static', filename='img/dataset-new.jpg') }}"/></div>
+            </div>
+            <div class="core-empty-action">
+                <a href="/datasets/add" class="btn btn-primary">创建数据集</a>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $("[data-toggle=popover]").popover({
+                html: true,
+                content: function () {
+                    return $("#desc-img").html();
+                }
+            });
+        </script>
+    {% endif %}
+    {% for dataset in datasets.items %}
+
+        {% include 'component-dataset-item.html' %}
+        {% block dataset_item %}{% endblock %}
+
+    {% endfor %}
+
+    <script type="text/javascript">
+      $('[data-toggle="tooltip"]').tooltip();
+    </script>
+
+{% endblock %}

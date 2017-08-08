@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb hidden-xs hidden-sm">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/datasets">科研数据平台</a>
+                    </li>
+                    <li class="active">数据集详情</li>
+                </ol>
+            </div>
+            <div class="col-md-12">{% include 'flash.html' %}</div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3 class="core-dataset-title m-t-0">{{ dataset['title'] }}</h3>
+                                <ul class="core-dataset-info">
+                                    <li class="core-dataset-meta-author">
+                                        <a href="/user/{{ dataset['author'].id }}/dataset">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>{{ dataset['author'].nickname }}</a>
+                                    </li>
+                                    <li class="core-dataset-meta-pubtime">
+                                        <!-- <a href="/datasets/item/{{ dataset['udi'] }}"> -->
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i>发布于
+                                        {{ dataset['published'].strftime("%Y-%m-%d %H:%M:%S") }}
+                                        <!-- </a> -->
+                                    </li>
+                                    <li class="core-dataset-meta-udi">
+                                        <!-- <a href="/datasets/item/{{ dataset['udi'] }}"> -->
+                                        <i class="fa fa-check-square-o text-primary"></i>
+                                        <span class="text-primary" id="core-detail-udi">udi:{{ dataset['udi'] }}</span>
+                                        <!-- </a> -->
+                                    </li>
+                                </ul>
+                                <div class="core-dataset-desc">
+                                    <p style="max-height:101px;overflow-y:hidden;">{{ dataset['desc'] }}</p>
+                                </div>
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        var descText = $('.core-dataset-desc p');
+                                        var descShow = "<button class=\"btn btn-block btn-link\"><i class=\"fa fa-angle-down m-r-5\"></i>显示更多</button>";
+                                        if (descText.height() > 100) {
+                                            descText.css({'height': '100px', 'overflow-y': 'hidden'});
+                                            $(descShow).insertAfter(descText);
+                                        }
+                                        $('.core-dataset-desc').delegate('button', 'click', function () {
+                                            if (descText.attr('style')) {
+                                                descText.removeAttr('style');
+                                                $(this).html('<i class=\"fa fa-angle-up m-r-5\"></i>收起');
+                                            } else {
+                                                descText.css({'height': '100px', 'overflow-y': 'hidden'});
+                                                $(this).html('<i class=\"fa fa-angle-down m-r-5\"></i>显示更多');
+                                            }
+                                        })
+                                    })
+                                </script>
+                                <ul class="core-dataset-label">
+                                    <li>
+                                        <label class="label label-default">{{ dataset['authority'] }}</label>
+                                    </li>
+                                    <li>
+                                        <label class="label label-default">{{ dataset['subject'] }}</label>
+                                    </li>
+                                    <li>
+                                        <label class="label label-default">{{ dataset['datatype'] }}</label>
+                                    </li>
+                                    <li>
+                                        <label class="label label-default">{{ dataset['expert'] }}</label>
+                                    </li>
+                                    <li>
+                                        <label class="label label-default">{{ dataset['kind'] }}</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">中国开放资源唯一认证</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                      <a
+                                          {% if current_user.is_anonymous or not current_user.is_authenticated %}
+                                          href="/datasets/item/{{ dataset['udi'] }}/notify?action=download#core-dataset-detail-content" onclick="changeNotifyText('download')"
+                                          {% else %}
+                                          href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content"
+                                          {% endif %}>
+                                          <i class="fa fa-link m-r-5"></i>区块链技术保证数据账簿可靠不可篡改
+                                      </a>
+                                        <div class="core-udi m-b-10" id="copyTarget1" placeholder="数据集引证">
+                                            <span class="core-udi-prefix">{{ dataset['title'] }}
+                                                http://udi.coreplatform.org/</span>{{ dataset['udi'] }}
+                                        </div>
+                                        <p style="font-size:12px;">{{ dataset['title'] }}<br>
+                                            http://hugedata.coreplatform.org/{{ dataset['udi'] }}</p>
+                                        <div>
+                                            <button class="btn btn-default btn-sm" id="copyButton1" data-toggle="tooltip" data-placement="auto" data-trigger="manual" title="xx" data-clipboard-target="copyTarget1">
+                                                <i class="fa fa-copy m-r-5"></i>复制数据集引证信息</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="core-dataset-action">
+                                    {% if current_user.is_authenticated %}
+                                        {% if dataset.is_editable(g.user) %}
+                                            <div class="{% if dataset['authority_id'] > 10004 %}col-xs-6{% else %}col-xs-12{% endif %}">
+                                                <a class="btn btn-default btn-block" href="/datasets/edit/{{dataset.udi}}">更新数据集</a>
+                                            </div>
+                                            {% if dataset['authority_id'] > 10004 %}
+                                                <div class="col-xs-6">
+                                                    <a class="btn btn-default btn-block" href="/datasets/item/{{ dataset['udi'] }}/auth">数据集授权</a>
+                                                </div>
+                                            {% endif %}
+                                        {% elif not g.user.is_following_dataset(dataset) %}
+                                            <div class="{% if g.user.apply_dataset_status(dataset) > 0 %}col-xs-6{% else %}col-xs-12{% endif %}">
+                                                <button class="btn btn-primary btn-block" core-dataset-follow="0" core-dataset-id="{{dataset.udi}}">关注</button>
+                                            </div>
+                                        {% else %}
+                                            <div class="{% if g.user.apply_dataset_status(dataset) > 0 %}col-xs-6{% else %}col-xs-12{% endif %}">
+                                                <button class="btn btn-default btn-block" core-dataset-follow="1" core-dataset-id="{{dataset.udi}}">正在关注</button>
+                                            </div>
+                                        {% endif %}
+                                        {% if g.user.apply_dataset_status(dataset) == 1 %}
+                                            <div class="col-xs-6">
+                                                <a class="btn btn-primary btn-block" href="/datasets/apply/{{dataset.udi}}">申请访问</a>
+                                            </div>
+                                        {% elif g.user.apply_dataset_status(dataset) == 2%}
+                                            <div class="col-xs-6">
+                                                <a class="btn btn-link btn-block" data-toggle="tooltip" data-placement="auto" data-trigger="hover focus" title="这是一个有限授信数据集，您已经向作者申请访问权限，请等待作者回复申请结果">等待申请处理</a>
+                                            </div>
+                                        {% elif g.user.apply_dataset_status(dataset) == 3%}
+                                            <div class="col-xs-6">
+                                                <a class="btn btn-link btn-block" data-toggle="tooltip" data-placement="auto" data-trigger="hover focus" title="这是一个有限授信数据集，您已经获得作者批准使用权限">已获得使用权限</a>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="col-xs-12">
+                                            <a class="btn btn-default btn-block" href="/login">登录来进行更多操作</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="core-dataset-detail-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="core-lmenu">
+                            <ul class="lg">
+                                <li {% if request.path.find('/meta')> 0 %} class="active" {% endif %}>
+                                    <a href="/datasets/item/{{ dataset['udi'] }}/meta#core-dataset-detail-content">
+                                        <i class="fa fa-database m-r-5"></i>
+                                        <h4>数据集信息</h4>
+                                        <p>元数据、基本信息</p>
+                                    </a>
+                                </li>
+                                <li {% if request.path.find('/preview')> 0 %} class="active" {% endif %}>
+                                    <a
+                                        {% if current_user.is_anonymous or not current_user.is_authenticated %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/notify?action=preview#core-dataset-detail-content" onclick="changeNotifyText('preview')"
+                                        {% else %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/preview#core-dataset-detail-content"
+                                        {% endif %}>
+                                        <i class="fa fa-bar-chart m-r-5"></i>
+                                        <h4>数据预览</h4>
+                                        <p>在线查看数据</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        {% if current_user.is_anonymous or not current_user.is_authenticated or not fileExt in ext['data'] %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/notify?action=visual#core-dataset-detail-content" onclick="changeNotifyText('visual')"
+                                        {% else %}
+                                        id="core-preview-visual"
+                                        core-urlsource="{{ dataset.urlsource() }}"
+                                        {% endif %}>
+                                        <i class="fa fa-area-chart m-r-5"></i>
+                                        <h4>数据可视化</h4>
+                                        <p>图表展示数据</p>
+                                    </a>
+                                    {% if not current_user.is_anonymous and dataset.is_authorized(current_user) %}
+                                        <script type="text/javascript">
+                                            $('#core-preview-visual').on('click', function () {
+                                                sourceurl = $(this).attr('core-urlsource');
+                                                target = '/raw?udi=' + sourceurl + '&detail=1';
+                                                window.open(target, '_blank').focus();
+                                            });
+                                        </script>
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    <a
+                                        {% if current_user.is_anonymous or not current_user.is_authenticated or not fileExt in ext['data'] %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/notify?action=bcp#core-dataset-detail-content" onclick="changeNotifyText('bcp')"
+                                        {% else %}
+                                        href="/bcp"
+                                        target="_blank"
+                                        {% endif %}>
+                                        <i class="fa fa-codepen m-r-5"></i>
+                                        <h4>大数据分析</h4>
+                                        <p>集群计算服务</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        {% if current_user.is_anonymous or not current_user.is_authenticated or not fileExt in ext['data'] %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/notify?action=rq#core-dataset-detail-content" onclick="changeNotifyText('rq')"
+                                        {% else %}
+                                        id="core-preview-process"
+                                        core-urlsource="{{dataset['udi']}}"
+                                        {% endif %}>
+                                        <i class="fa fa-code m-r-5"></i>
+                                        <h4>报表分析</h4>
+                                        <p>在线自助构建</p>
+                                    </a>
+                                    <script type="text/javascript">
+                                        $('#core-preview-process').on('click', function () {
+                                            sourceurl = $(this).attr('core-urlsource');
+                                            target = "/datasets/item/" + sourceurl + "/rq"
+                                            window.open(target, '_blank').focus();
+                                        });
+                                    </script>
+                                </li>
+                                <li {% if request.path.find( '/download')> 0 %} class="active" {% endif %}>
+                                    <a
+                                        {% if current_user.is_anonymous or not current_user.is_authenticated %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/notify?action=download#core-dataset-detail-content" onclick="changeNotifyText('download')"
+                                        {% else %}
+                                        href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content"
+                                        {% endif %}>
+                                        <i class="fa fa-cloud-download m-r-5"></i>
+                                        <h4>数据账簿及下载</h4>
+                                        <p>获取数据文件</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="content" style="padding:15px;">
+                                {% block dataset_detail_content %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                {# <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body p-t-0">
+                                <div class="core-panel">
+                                    <div class="core-dmenu">
+                                        <div class="core-dmenu-icon">
+                                            {% if fileExt in 'csv json' %}
+                                                <i class="fa fa-database"></i>
+                                            {% elif fileExt in 'doc docx pages'%}
+                                                <i class="fa fa-file-word-o"></i>
+                                            {% elif fileExt in 'xls xlsx numbers' %}
+                                                <i class="fa fa-file-excel-o"></i>
+                                            {% elif fileExt in 'ppt pptx key' %}
+                                                <i class="fa fa-file-powerpoint-o"></i>
+                                            {% elif fileExt in 'zip rar 7z' %}
+                                                <i class="fa fa-file-zip-o"></i>
+                                            {% elif fileExt in 'jpg jpeg png gif bmp svg webp' %}
+                                                <i class="fa fa-file-image-o"></i>
+                                            {% elif fileExt in 'pdf' %}
+                                                <i class="fa fa-file-pdf-o"></i>
+                                            {% elif fileExt in 'html js py' %}
+                                                <i class="fa fa-file-code-o"></i>
+                                            {% else %}
+                                                <i class="fa fa-file-o"></i>
+                                            {% endif %}
+                                            <p>{{ fileExt | upper() }}</p>
+                                        </div>
+                                        <div class="core-dmenu-right">
+                                            <div class="core-dmenu-file">{{ dataset['datasource'].split('/').pop() }}</div>
+                                            <ul>
+                                                <li {% if request.path.find( '/download')> 0 %} class="active" {% endif %}>
+                                                    <a {% if not current_user.is_anonymous %}href="/datasets/item/{{ dataset['udi'] }}/download#core-dataset-detail-content"{% endif %}>
+                                                        <i class="fa fa-cloud-download m-r-5"></i>数据下载</a>
+                                                </li>
+                                                <li {% if request.path.find( '/preview')> 0 %} class="active" {% endif %}>
+                                                    <a {% if not current_user.is_anonymous %}href="/datasets/item/{{ dataset['udi'] }}/preview#core-dataset-detail-content"{% endif %}>
+                                                        <i class="fa fa-bar-chart m-r-5"></i>数据预览</a>
+                                                </li>
+                                                <li>
+                                                    <a {% if not current_user.is_anonymous %}href="/datasets/item/{{ dataset['udi'] }}/preview#core-dataset-detail-content" target= {% endif %}"_blank">
+                                                        <i class="fa fa-bar-chart m-r-5"></i>可视化预览</a>
+                                                </li>
+                                                <li {% if request.path.find( '/analysis')> 0 %} class="active" {% endif %}>
+                                                    <a {% if not current_user.is_anonymous %}href="/datasets/item/{{ dataset['udi'] }}/analysis#core-dataset-detail-content"{% endif %}>
+                                                        <i class="fa fa-code m-r-5"></i>在线分析</a>
+                                                </li>
+                                                {% if current_user.id == dataset.author_id %}
+                                                    <li {% if request.path.find( '/auth')> 0 %} class="active" {% endif %}>
+                                                        <a href="/datasets/item/{{ dataset['udi'] }}/auth#core-dataset-detail-content">授权</a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+        {% if not dataset.is_editable(g.user) %}
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#core-dataset-action').delegate('[core-dataset-follow=0]', 'click', function () {
+                        var button = $(this);
+                        var datasetID = $(this).attr('core-dataset-id');
+                        var toFollow = $.ajax({
+                            url: "/follow_dataset",
+                            async: true,
+                            type: 'post',
+                            data: {
+                                id: datasetID
+                            },
+                            success: function () {
+                                button.text('正在关注').removeClass('btn-danger btn-primary').addClass('btn-default').attr('core-dataset-follow', '1');
+                            }
+                        });
+                    })
+
+                    $('#core-dataset-action').delegate('[core-dataset-follow=1]', {
+                        mouseover: function () {
+                            $(this).text('取消关注').removeClass('btn-primary').addClass('btn-danger');
+                        },
+                        mouseleave: function () {
+                            $(this).text('正在关注').removeClass('btn-danger').addClass('btn-default');
+                        },
+                        click: function () {
+                            var button = $(this);
+                            var datasetID = $(this).attr('core-dataset-id');
+                            var unFollow = $.ajax({
+                                url: "/unfollow_dataset",
+                                async: true,
+                                type: 'post',
+                                data: {
+                                    id: datasetID
+                                },
+                                success: function () {
+                                    button.text('关注').removeClass('btn-danger btn-default').addClass('btn-primary').attr('core-dataset-follow', '0');
+                                }
+                            });
+                        }
+                    })
+                })
+            </script>
+        {% endif %}
+    {% endif %}
+    {% block tpl_script %}
+        <script src="{{ url_for('static', filename='js/clipboard.min.js') }}"></script>
+        <script>
+            var copyButton1 = '#copyButton1';
+            var copyTarget1 = '#copyTarget1';
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+            var clipboard1 = new Clipboard(copyButton1, {
+                target: function () {
+                    return document.querySelector(copyTarget1);
+                }
+            });
+            function hideTooltip1() {
+                setTimeout(function () {
+                    $(copyButton1).tooltip('hide');
+                }, 1000);
+            }
+
+            clipboard1.on('success', function (e) {
+                $(copyButton1).attr('data-original-title', '复制成功！').tooltip('show');
+                hideTooltip1();
+            });
+
+            clipboard1.on('error', function (e) {
+                $(copyButton1).attr('data-original-title', '复制失败，请手动复制').tooltip('show');
+                hideTooltip1();
+            });
+        </script>
+        <script>
+            var copyButton2 = '#copyButton2';
+            var copyTarget2 = '#copyTarget2';
+
+            var clipboard2 = new Clipboard(copyButton2, {
+                target: function () {
+                    return document.querySelector(copyTarget2);
+                }
+            });
+            function hideTooltip2() {
+                setTimeout(function () {
+                    $(copyButton2).tooltip('hide');
+                }, 1000);
+            }
+
+            clipboard2.on('success', function (e) {
+                $(copyButton2).attr('data-original-title', '复制成功！').tooltip('show');
+                hideTooltip2();
+            });
+
+            clipboard2.on('error', function (e) {
+                $(copyButton2).attr('data-original-title', '复制失败，请手动复制').tooltip('show');
+                hideTooltip2();
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                var view = location.search.split('view_tab=');
+                if (view.length == 2) {
+                    $('.nav-tabs.tabs-left li:eq(' + view[1].split('&')[0] + ') a').click()
+                }
+            })
+        </script>
+    {% endblock %}
+{% endblock %}

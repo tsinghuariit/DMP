@@ -1,0 +1,22 @@
+{% extends "user.html" %}
+{% block profile_content %}
+  {% if not datasets.items %}
+    <div class="core-empty">
+      <div class="core-empty-icon">
+        <i class="fa fa-database"></i>
+      </div>
+      <div class="core-empty-info">还未获得数据集授权</div>
+      <div class="core-empty-desc">
+        <span >当您获得有限授信数据集授权时会在此显示
+        </span>
+      </div>
+    </div>
+  {% endif %}
+  {% for dataset in datasets.items %}
+
+    {% include 'component-dataset-item.html' %}
+    {% block dataset_item %}{% endblock %}
+
+  {% endfor %}
+
+{% endblock %}

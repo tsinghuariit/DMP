@@ -1,0 +1,129 @@
+<nav class="core-navsearch">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="core-nav-logo">
+                    <a href="/" class="hidden-xs hidden-sm"><img src="/static/img/logo.png" alt=""></a>
+                    <a href="/datasets" class="hidden-md hidden-lg"><img src="/static/img/logo.png" alt=""></a>
+                </div>
+                <div class="core-nav-menu core-nav-menu-left hidden-xs hidden-sm hidden-md hidden-lg">
+                    <ul>
+                        <li>
+                            <a href="/dataset">科研数据平台</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Menu on Mobile view -->
+                <div class="core-nav-menu core-nav-menu-right pull-right" id="core-nav-menu-m"></div>
+
+            </div>
+            <div class="col-lg-5 col-md-4">
+                <div class="core-nav-search">
+                    <div class="input-group">
+                        {% if search %}
+                            <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value="{{search}}">
+                        {% else %}
+                            <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value="">
+                        {% endif %}
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" onclick="location.href='/datasets/search?search='+$('#core-search-box').val()">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <!-- Menu on Desktop view -->
+                {% if g.user.is_authenticated %}
+                    <div class="core-nav-menu core-nav-menu-right pull-right" id="core-nav-menu-o">
+                        <ul id="core-nav-menu-i">
+                            <li data-toggle="tooltip" data-placement="bottom" title="创建数据集">
+                                <a href="{{url_for('dataset_add')}}">
+                                    <span class="hidden-xs hidden-sm hidden-md"><i class="fa fa-database m-r-10" aria-hidden="true"></i>创建数据集</span>
+                                    <span class="hidden-lg"><i class="fa fa-database" aria-hidden="true"></i></span>
+                                </a>
+                            </li>
+                            {#<li class="core-notify-icon dropdown" data-toggle="tooltip" data-placement="bottom" title="通知"> <a class="dropdown-toggle" type="button" id="core-notify-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fa
+                            fa-bell" aria-hidden="true"></i> </a> <ul class="dropdown-menu dropdown-menu-right"> <li class="core-activity-newdataset"> <div class="core-activity-content"> <div class="left pull-left"> <div class="core-activity-indicate"></div> <div
+                            class="core-activity-time">13:13</div> </div> <div class="right"> <div class="core-activity-text"> <ul class="core-activity-userlist"> <li> <a href="1">user1</a> </li> <li> <a href="2">user2</a> </li> <li> <a href="3">user3</a> </li> </ul> 等 5
+                            位用户申请使用您的数据集 <a href="">全国主要城市空气质量数据 PM2.5</a> </div> </div> </div> </li> <li role="separator" class="divider"></li> <li> <a href="/notifications">更多通知信息</a> </li> </ul> </li>#}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" type="button" id="core-profile-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="core-headphoto-xs" style="background-image:url({% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %});vertical-align:-8px;"></div>
+                                    <span class="hidden-xs hidden-sm m-l-10">{{g.user.nickname}}
+                                        <span class="caret"></span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="core-profile-menu">
+                                    <li>
+                                        <a href="/user/{{g.user.id}}/activity">
+                                            <i class="fa fa-heartbeat hidden-xs hidden-sm"></i>我的动态</a>
+                                    </li>
+                                    <li>
+                                        <a href="/user/{{g.user.id}}/dataset">
+                                            <i class="fa fa-database p-l-2 hidden-xs hidden-sm"></i>我的数据集</a>
+                                    </li>
+                                    <li>
+                                        <a href="/user/{{g.user.id}}/following">
+                                            <i class="fa fa-user-circle-o hidden-xs hidden-sm"></i>我的关注</a>
+                                    </li>
+                                    <li>
+                                        <a href="/user/{{g.user.id}}/group">
+                                            <i class="fa fa-group hidden-xs hidden-sm"></i>我的群组</a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/edit">
+                                            <i class="fa fa-gears hidden-xs hidden-sm"></i>个人设置</a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/logout">
+                                            <i class="fa fa-sign-out hidden-xs hidden-sm"></i>退出登录</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="core-nav-menu pull-right" id="core-nav-menu-o">
+                        <ul id="core-nav-menu-i">
+                            <a href="/login" class="btn btn-link">登录</a>
+                            <a href="/register/captcha/sms" class="btn btn-primary">注册</a>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% block tpl_scrpit %}
+    <script type="text/javascript">
+        function coreNavMenuMobile() {
+            if ($(window).width() < 992) {
+                $('#core-nav-menu-m').append($('#core-nav-menu-i'));
+            } else {
+                $('#core-nav-menu-o').append($('#core-nav-menu-i'));
+            }
+        }
+
+        $(document).ready(function () {
+            coreNavMenuMobile();
+        });
+
+        $(window).resize(function () {
+            coreNavMenuMobile();
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        $('#myDropdown').on('show.bs.dropdown', function () {
+            // do something…
+        })
+    </script>
+{% endblock %}

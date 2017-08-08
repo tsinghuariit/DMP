@@ -1,0 +1,179 @@
+{% extends "edit.html" %}
+
+{% block edit %}
+    <a href="/user/{{g.user.id}}" class="btn btn-default pull-right">查看我的空间</a>
+    <h4 class="m-l-20">编辑个人信息</h4>
+    <hr>
+    <form action="" method="post" name="edit" enctype="multipart/form-data">
+        <ul class="core-form core-userinfo">
+            <li>
+                <h5 class="core-form-label">头像</h5>
+                <div class="core-form-content">
+                    {{ form.hidden_tag() }}
+                    <div class="hidden">{{ form.avatar }}</div>
+                    <div class="core-headupload" style="background-image:url({% if g.user.avatarsource %}{{ g.user.avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %})">
+                        <div id="core-headupload-mask">上传新头像</div>
+                    </div>
+                    <div class="modal fade" id="headUploadModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" style="width:350px;" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h3 class="text-center" style="margin-top:30px;">预览您的头像</h3>
+                                    <div id="imgPreview" style="margin: 20px auto 30px auto;background-color: #eee;"></div>
+                                    <button type="button" class="btn btn-link btn-block m-b-15" onclick="$('#avatar').trigger('click')">重新选择</button>
+                                    <div class="text-center" style="margin-bottom:15px;">
+                                        <input class="btn btn-primary" id="uploadHeadphoto" type="submit" value="{{ _('上传新头像') }}" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h5 class="core-form-label">姓名</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        <span class="core-form-content-text">{{g.user.nickname}}</span>
+                        <a class="btn btn-xs btn-link core-form-content-edit">
+                            <i class="fa fa-pencil"></i>
+                            编辑</a>
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                {{ form.nickname(maxlength=64, class="form-control") }}
+                                <input class="btn btn-primary" type="submit" value="{{ _('保存') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h5 class="core-form-label">联系方式</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        <span class="core-form-content-text">{{ g.user.cellphone }}</span>
+                        <a class="btn btn-xs btn-link core-form-content-edit">
+                            <i class="fa fa-pencil"></i>
+                            编辑</a>
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                {{ form.cellphone(class='form-control') }}
+                                <input class="btn btn-primary core-form-content-save" type="submit" value="{{ _('保存') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h5 class="core-form-label">简介</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        {% if g.user.about_me %}
+                            <span class="core-form-content-text">{{ g.user.about_me }}</span>
+                            <a class="btn btn-xs btn-link core-form-content-edit">
+                                <i class="fa fa-pencil"></i>
+                                编辑</a>
+                        {% else %}
+                            <span class="core-form-content-text"></span>
+                            <a class="btn btn-xs btn-link core-form-content-edit" style="display: inline-block">
+                                <i class="fa fa-pencil"></i>
+                                编辑</a>
+                        {% endif %}
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                {{ form.about_me(class='form-control') }}
+                                <input class="btn btn-primary core-form-content-save" type="submit" value="{{ _(" 保存") }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h5 class="core-form-label">默认单位</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        <span class="core-user-content-text">{{ org }}</span>
+                        <a class="btn btn-xs btn-link core-form-content-edit">
+                            <i class="fa fa-pencil"></i>
+                            编辑</a>
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                {{ form.org(maxlength=64, class="form-control") }}
+                                {% for error in form.org.errors %}
+                                    <span class="help-inline">[{{ error }}]</span><br>
+                                {% endfor %}
+                                <input class="btn btn-primary core-form-content-save" type="submit" value="{{ _('保存') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h5 class="core-form-label">默认专家学者</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        <span class="core-user-content-text">{{ expert }}</span>
+                        <a class="btn btn-xs btn-link core-form-content-edit">
+                            <i class="fa fa-pencil"></i>
+                            编辑</a>
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                {{ form.expert(maxlength=64, class="form-control") }}
+                                {% for error in form.expert.errors %}
+                                    <span class="help-inline">[{{ error }}]</span><br>
+                                {% endfor %}
+                                <input class="btn btn-primary core-form-content-save" type="submit" value="{{ _('保存') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <h5 class="core-form-label">职称</h5>
+                <div class="core-form-content">
+                    <div class="core-form-content-display">
+                        <span class="core-user-content-text">{{ professional }}</span>
+                        <a class="btn btn-xs btn-link core-form-content-edit">
+                            <i class="fa fa-pencil"></i>
+                            编辑</a>
+                    </div>
+                    <div class="core-form-content-input">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                {{ form.professional(maxlength=64, class="form-control") }}
+                                {% for error in form.professional.errors %}
+                                    <span class="help-inline">[{{ error }}]</span><br>
+                                {% endfor %}
+                                <input class="btn btn-primary core-form-content-save" type="submit" value="{{ _('保存') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>
+    <script type="text/javascript">
+        var url = window.location.pathname.split('/');
+        var purpose = 'profile';
+        if (url[url.length - 1] != purpose) {
+            window.location.href = window.location.pathname + "/" + purpose;
+        }
+    </script>
+{% endblock %}

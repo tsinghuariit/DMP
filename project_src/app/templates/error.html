@@ -1,0 +1,46 @@
+{% extends "base-clear.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="core-error core-error-500">
+          {% block error_icon %}
+          {% endblock %}
+
+          {% block error_code %}
+          {% endblock %}
+          <br>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div class="core-nav-search">
+                <div class="input-group">
+                  {% if search %}
+                  <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value="{{search}}">
+                  {% else %}
+                  <input id="core-search-box" type="text" class="form-control" placeholder="搜索" value="">
+                  {% endif %}
+                  <span class="input-group-btn"><button class="btn btn-primary" type="button" onclick="location.href='/datasets/search?search='+$('#core-search-box').val()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <br>
+              {% block error_text %}
+              {% endblock %}
+            </div>
+            <div class="col-sm-12">
+              <br>
+              <a href="/" class="core-error-home"><i class="fa fa-home"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

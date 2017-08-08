@@ -1,0 +1,263 @@
+{% extends "dmp.html" %}
+{% block dmp_content %}
+
+  <section>
+    <div class="container">
+      <ol class="breadcrumb hidden-xs hidden-sm m-t-20">
+        <li>
+          <a href="/">首页</a>
+        </li>
+        <li>
+          <a href="/datasets">科研数据平台</a>
+        </li>
+        <li class="active">数据集详情</li>
+      </ol>
+      <div class="dmp-heading">
+        <i class="fa fa-clone m-r-10" aria-hidden="true"></i>功能导览
+      </div>
+    </div>
+  </section>
+  <section id="dmp-keyfeatures">
+    <div class="container">
+      <ul>
+        <li id="dmp-keyfeature-visual" style="background-image:url('{{ url_for('static', filename='img/intro/kv-visual.png') }}')">
+          <h3 class="text-center">信息可视化，在线即可完成</h3>
+          <div class="row" style="padding-top: 220px;">
+            <div class="col-xs-4">
+              <h4 class="text-center">在线预览</h4>
+              <p class="text-center">无需下载，即可在线预览数据内容</p>
+            </div>
+            <div class="col-xs-4">
+              <h4 class="text-center">拖拽数据生成图表</h4>
+              <p class="text-center">只需简单拖拽，建立数据与图表之间联系，即可生成信息可视化图表</p>
+            </div>
+            <div class="col-xs-4">
+              <h4 class="text-center">信息可视化图表</h4>
+              <p class="text-center">有多达 20 多种信息可视化图表可供选择，还可进行在线分析</p>
+            </div>
+          </div>
+        </li>
+        <li id="dmp-keyfeature-udi" style="background-image:url('{{ url_for('static', filename='img/intro/kv-udi.png') }}')">
+          <h3 class="text-center">唯一认证标识，全程保障安全</h3>
+          <div class="row" style="padding-top:600px;">
+            <div class="col-md-12">.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section id="dmp-feature-nav">
+    <div class="container">
+      <ul class="">
+        <li>
+          <a href="#dmp-item-storage">
+            <i class="fa fa-pie-chart"></i>
+            <h4>数据存储</h4>
+            <p>可靠云储存</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-admin">
+            <i class="fa fa-database"></i>
+            <h4>数据管理</h4>
+            <p>在线管理数据</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-preview">
+            <i class="fa fa-bar-chart"></i>
+            <h4>在线预览</h4>
+            <p>数据可视化</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-auth">
+            <i class="fa fa-eye"></i>
+            <h4>数据权限</h4>
+            <p>灵活的授权</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-analysis">
+            <i class="fa fa-code"></i>
+            <h4>在线分析</h4>
+            <p>在线执行程序代码</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-version">
+            <i class="fa fa-clock-o"></i>
+            <h4>版本管理</h4>
+            <p>所有版本记录在案</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-publish">
+            <i class="fa fa-book"></i>
+            <h4>数据出版</h4>
+            <p>高度流程自动出版</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-udi">
+            <i class="fa fa-id-badge"></i>
+            <h4>数据引证</h4>
+            <p>唯一认证标识</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-profile">
+            <i class="fa fa-envelope"></i>
+            <h4>数据发布</h4>
+            <p>提供全方位元数据</p>
+          </a>
+        </li>
+        <li>
+          <a href="#dmp-item-secure">
+            <i class="fa fa-lock"></i>
+            <h4>数据安全</h4>
+            <p>全方位安全保障</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("#dmp-feature-nav").sticky({topSpacing: 0});
+      });
+    </script>
+  </section>
+  <section id="features-content" data-spy="scroll" data-target="#dmp-feature-nav">
+    <div class="container">
+      <ul class="row dmp-feature-list">
+        <li class="col-md-12" id="dmp-item-storage">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <i class="fa fa-pie-chart"></i>
+              <h4>数据存储</h4>
+              <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+            </div>
+            <div class="col-md-7">
+              <img src="{{ url_for('static', filename='img/features/data-storage.png') }}" alt="">
+            </div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-admin">
+          <div class="row">
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-database"></i>
+              <h4>数据管理</h4>
+              <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+            </div>
+            <div class="col-md-6"><img src="{{ url_for('static', filename='img/features/dataset-edit.png') }}" alt=""></div>
+            <div class="col-md-4 col-md-offset-1 hidden-xs">
+              <i class="fa fa-database"></i>
+              <h4>数据管理</h4>
+              <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+            </div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-preview">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <i class="fa fa-bar-chart"></i>
+              <h4>在线预览</h4>
+              <p>可靠稳定的数据库云存储服务，并提供在线预览、分析等重要功能</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/data-visual.png') }}" alt=""></div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-auth">
+          <div class="row">
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-eye"></i>
+              <h4>数据权限</h4>
+              <p>公开、有限授信、灵活的授权方式保证您的数据安全</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/dataset-auth.png') }}" alt=""></div>
+            <div class="col-md-4 hidden-xs">
+              <i class="fa fa-eye"></i>
+              <h4>数据权限</h4>
+              <p>公开、有限授信、灵活的授权方式保证您的数据安全</p>
+            </div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-analysis">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <i class="fa fa-code"></i>
+              <h4>在线分析</h4>
+              <p>不用部署和启动复杂的集成环境，通过云服务，即可在线执行程序代码</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/data-analysis.png') }}" alt=""></div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-version">
+          <div class="row">
+            <div class="col-md-4 hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-clock-o"></i>
+              <h4>版本管理</h4>
+              <p>随时更新您的数据文件版本，包括元数据在内的任何修改动作都会记录在案</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/version-control.png') }}" alt=""></div>
+            <div class="col-md-4 hidden-xs">
+              <i class="fa fa-clock-o"></i>
+              <h4>版本管理</h4>
+              <p>随时更新您的数据文件版本，包括元数据在内的任何修改动作都会记录在案</p>
+            </div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-publish">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <i class="fa fa-book"></i>
+              <h4>数据出版</h4>
+              <p>高度流程自动出版</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/publish.png') }}" alt=""></div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-udi">
+          <div class="row">
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-id-badge"></i>
+              <h4>数据引证</h4>
+              <p>全网可查唯一认证标识，全程保证数据可靠性</p>
+            </div>
+            <div class="col-md-6 col-md-offset-1"><img src="{{ url_for('static', filename='img/features/udi.png') }}" alt=""></div>
+            <div class="col-md-4 hidden-xs">
+              <i class="fa fa-id-badge"></i>
+              <h4>数据引证</h4>
+              <p>全网可查唯一认证标识，全程保证数据可靠性</p>
+            </div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-profile">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-1">
+              <i class="fa fa-envelope"></i>
+              <h4>数据发布</h4>
+              <p>提供全方位元数据</p>
+            </div>
+            <div class="col-md-7"><img src="{{ url_for('static', filename='img/features/profile.png') }}" alt=""></div>
+          </div>
+        </li>
+        <li class="col-md-12" id="dmp-item-secure">
+          <div class="row">
+            <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-lock"></i>
+              <h4>数据安全</h4>
+              <p>全方位安全保障</p>
+            </div>
+            <div class="col-md-6 col-md-offset-1"><img src="{{ url_for('static', filename='img/features/secure.png') }}" alt=""></div>
+            <div class="col-md-4 hidden-xs">
+              <i class="fa fa-lock"></i>
+              <h4>数据安全</h4>
+              <p>全方位安全保障</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+{% endblock %}

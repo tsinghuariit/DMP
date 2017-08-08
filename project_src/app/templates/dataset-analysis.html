@@ -1,0 +1,93 @@
+{% extends "dataset-detail.html" %}
+{% block dataset_detail_content %}
+    <div>
+        {% if dataset.nofile()%}
+            <div class="core-empty">
+                <div class="core-empty-icon">
+                    <i class="fa fa-bar-chart"></i>
+                </div>
+                <div class="core-empty-info">此数据集没有可以用于数据分析的文件</div>
+                <div class="core-empty-desc">您可以上传文件来进行数据分析</div>
+                <div class="core-empty-action">
+                    {% if current_user.id == dataset.author_id %}
+                        <a href="/datasets/edit/{{dataset.udi}}" class="btn btn-primary">上传文件</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% if dataset.is_authorized(current_user) and not dataset.nofile()%}
+        <div class="row" id="core-detail-analysis">
+            <!-- <div class="col-md-12" id="core-detail-analysis-file">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="dropdown">
+                            <button class="btn btn-default btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{title}}.JSON<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                    <a href="#">{{title}}.JSON</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">预置分析</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">C4.5 算法</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">CART 算法</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">KNN(K 最近邻) 算法</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">朴素贝叶斯</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">SVM(支持向量机)</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">EM(期望最大化) 算法</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">Apriori 算法</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">自定义分析</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">Python</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">R 语言</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">MatLab</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-6">
+                                <button class="btn btn-default btn-block">SparkSQL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "dataset-detail.html" %}
+{% block dataset_detail_content %}
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>名称</th>
+                        <td>{{ dataset['title'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>数据集引证</th>
+                        <td>
+                            <p id="copyTarget2">{{ dataset['title'] }} http://hugedata.coreplatform.org/{{ dataset['udi'] }}</p>
+                            <button class="btn btn-default btn-sm" id="copyButton2" data-toggle="tooltip" data-placement="auto" data-trigger="manual" title="xx" data-clipboard-target="#copyTarget2">
+                                <i class="fa fa-copy"></i>
+                                复制数据集引证信息</button>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>数据指纹</th>
+                        <td>{{ dataset['signature'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>授权方式</th>
+                        <td>{{ dataset['authority'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>发布日期</th>
+                        <td>{{ dataset['published'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>修改日期</th>
+                        <td>{{ dataset['updated'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>发布用户</th>
+                        <td>
+                            <a href="/user/{{ dataset['author'].id }}/dataset">{{ dataset['author'].nickname }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>类型分类</th>
+                        <td>{{ dataset['datatype'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>专家学者</th>
+                        <td>{{ dataset['expert'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>学科分类</th>
+                        <td>{{ dataset['subject'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>数据空间分类</th>
+                        <td>{{ dataset['kind'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3" id="core-dataset-meta">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <label>作者</label>
+                    <div class="core-group-owner" id="core-group-owner" href="/user/{{ dataset['author'].id }}/dataset">
+                        <div class="core-headphoto-md" style="background-image:url({% if dataset['author'].avatarsource %}{{ dataset['author'].avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %});"></div>
+                        <div>
+                            <p class="core-group-owner-name">
+                                {{ dataset['author'].nickname }}
+                            </p>
+                            <ul class="core-group-owner-meta">
+                                <li>
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                    {{ dataset['author'].professional }}</li>
+                                <li>
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    {{ dataset['author'].expert }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $('#core-group-owner').on('click', function () {
+                            var url = $(this).attr('href');
+                            window.location.href = url;
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

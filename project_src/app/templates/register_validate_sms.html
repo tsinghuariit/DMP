@@ -1,0 +1,36 @@
+{% extends "base-clear.html" %}
+{% block content %}
+<div class="container core-log">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="core-log-title"><a href="/register/captcha/sms" class="btn btn-link btn-lg pull-left"><i class="fa fa-angle-left" aria-hidden="true"></i> 返回</a>输入验证码</p>
+            </div>
+            <div class="col-sm-12">
+                {% include 'flash.html' %}
+              <form action="/register/captcha/sms/validate" method="POST">
+                <div class="form-group">
+                  {{ form.captcha(class="form-control",id="code-form",placeholder="请输入验证码")}}
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" id="core-forget-btn">提交验证码</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="form-group">
+<div id="embed-captcha"></div>
+<p id="wait" class="show">正在加载验证码......</p>
+<p id="notice" class="hide">请先拖动验证码到相应位置</p>
+</div> -->
+{% endblock %}

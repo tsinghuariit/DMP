@@ -1,0 +1,128 @@
+{% extends "dmp.html" %}
+
+{% block dmp_content %}
+
+    <section class="dmp-keyview" style="background-image:url({{ url_for('static', filename='img/data-cloud.png') }});">
+        <div class="container">
+            <div id="hero">
+                <h3>Scientific Research Data Management Platform</h3>
+                <h1>数据管理平台</h1>
+                <h2>专业可信赖的高校科研数据管理平台</h2>
+            </div>
+            <div id="buttons">
+                <a href="/datasets/item/thudmp/11414532773" class="btn btn-lg btn-line-warning m-r-20 hidden-xs">样例数据演示</a>
+                <a href="/dataset" class="btn btn-lg btn-line-warning hidden-xs" style="border-color:transparent">开始科研数据检索</a>
+                <a href="/datasets/item/10348597972/7559" class="btn btn-line-warning m-r-20 hidden-sm hidden-md hidden-lg">样例数据演示</a>
+                <a href="/dataset" class="btn btn-line-warning hidden-sm hidden-md hidden-lg" style="border-color:transparent">开始科研数据检索</a>
+            </div>
+            {#<div id="division">
+            所有平台节点：
+            <ul>
+                <li>北京清华</li>
+                <li>天津武清D-Lab</li>
+                <li>福建福州</li>
+            </ul>
+        </div>#}
+            <div class="dmp-timeline">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="dmp-features">
+        <div class="block-list">
+            <div class="container">
+                <h2 class="title">信息可视化，在线即可完成</h2>
+                <img src="static/img/project-intro04.png" class="img">
+            </div>
+        </div>
+        <div class="container">
+            <div class="dmp-heading m-b-0">
+                <i class="fa fa-clone m-r-10" aria-hidden="true"></i>功能导览</div>
+            <ul>
+                <li>
+                    <a href="dmp/features#dmp-item-storage">
+                        <i class="fa fa-pie-chart"></i>
+                        <h4>数据存储</h4>
+                        <p>可靠云储存</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-admin">
+                        <i class="fa fa-databases"></i>
+                        <h4>数据管理</h4>
+                        <p>在线管理数据</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-preview">
+                        <i class="fa fa-bar-chart"></i>
+                        <h4>在线预览</h4>
+                        <p>数据可视化</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-auth">
+                        <i class="fa fa-eye"></i>
+                        <h4>数据权限</h4>
+                        <p>灵活的授权</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-analysis">
+                        <i class="fa fa-code"></i>
+                        <h4>在线分析</h4>
+                        <p>在线执行程序代码</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-version">
+                        <i class="fa fa-clock-o"></i>
+                        <h4>版本管理</h4>
+                        <p>所有版本记录在案</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-publish">
+                        <i class="fa fa-book"></i>
+                        <h4>数据出版</h4>
+                        <p>高度流程自动出版</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-udi">
+                        <i class="fa fa-id-badge"></i>
+                        <h4>数据引证</h4>
+                        <p>唯一认证标识</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-profile">
+                        <i class="fa fa-envelope"></i>
+                        <h4>数据发布</h4>
+                        <p>提供全方位元数据</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="dmp/features#dmp-item-secure">
+                        <i class="fa fa-lock"></i>
+                        <h4>数据安全</h4>
+                        <p>全方位安全保障</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</section>
+
+<script type="text/javascript">
+    function features() {
+        window.location.href = "/dmp/features";
+    }
+</script>
+
+{% endblock %}

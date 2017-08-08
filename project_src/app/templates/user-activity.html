@@ -1,0 +1,102 @@
+{% extends "user.html" %}
+
+{% block profile_content %}
+  <div class="core-activty">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="core-detail-down" core-target="dataset">
+          <div class="core-detail-down-left">
+            <i class="fa fa-database" aria-hidden="true"></i>
+          </div>
+          <div class="core-detail-down-right">
+            <h4 class="m-t-15">{{ user.dataset_creat_count() }}</h4>
+            <p>个数据集</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="core-detail-down" core-target="dataset">
+          <div class="core-detail-down-left">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+          </div>
+          <div class="core-detail-down-right">
+            <h4 class="m-t-15">{{ views }}</h4>
+            <p>数据集访问量</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="core-activity">
+            <ul class="core-activity-timeline">
+              {% for item in logs_data %}
+                <li class="core-activity-newdataset">
+                  <div class="core-activity-content">
+                    <div class="left pull-left">
+                      <div class="core-activity-indicate"></div>
+                      <div class="core-activity-time">{{ item['time_diff'] }}</div>
+                    </div>
+                    <div class="right">
+                      <ul class="core-activity-headphoto pull-left">
+                        <li><img class="" src="{% if item['user_id'].avatarsource %}{{ item['user_id'].avatarsource }}{% else %}{{ url_for('static', filename='img/default-headphoto.png') }}{% endif %}" alt=""></li>
+                      </ul>
+                      <div class="core-activity-text">
+                        <ul class="core-activity-userlist">
+                          <li>
+                            <a href="/user/{{ item['user_id'] }}">{{ item['nickname']}}</a>
+                          </li>
+                        </ul>
+                        {% if item['event_name'] == 'follow_user' %}
+                          关注了您
+                          {% if not g.user.is_following(user) %}
+                            <button class="btn btn-xs btn-primary" core-user-follow="0" core-user-id="{{ item['user_id'] }}">{{ _('关注') }}</button>
+                          {% else %}
+                            <button class="btn btn-xs btn-default" core-user-follow="1" core-user-id="{{ item['user_id'] }}">{{ _('正在关注') }}</button>
+                          {% endif %}
+                        {% elif item['event_name'] == 'follow_dataset' %}
+                          关注了您的数据集
+                          <a href="/datasets/item/{{item['dataset_id']}}">{{item['title']}}</a>
+                        {% elif item['event_name'] == 'download_dataset' %}
+                          下载了您的数据集
+                          <a href="/datasets/item/{{item['dataset_id']}}">{{item['title']}}</a>
+                        {% else %}
+                          预览了您的数据集
+                          <a href="/datasets/item/{{item['dataset_id']}}">{{item['title']}}</a>
+                          <{{ item['dataset_version'] }}>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $('.core-detail-down').on('mouseover', function () {
+        if ($(this).attr('core-target') != undefined) {
+          $(this).css('cursor', 'pointer');
+        }
+      }).on('click', function () {
+        var target = $(this).attr('core-target');
+        var targetUrl;
+        var currentUrl = window.location.pathname;
+        if (target != undefined) {
+          if (currentUrl.split('/').length < 4) {
+            var targetUrl = currentUrl + "/" + target;
+          } else {
+            var currentPosition = currentUrl.split('/').pop();
+            var targetUrl = currentUrl.replace(currentPosition, target);
+          }
+          window.location.href = targetUrl;
+        }
+      });
+    </script>
+  {% endblock %}

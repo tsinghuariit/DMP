@@ -1,0 +1,131 @@
+.core-activity {
+    padding: 15px;
+
+    > ul {
+        > li {
+            margin-left: -6px;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+            word-break: normal;
+        }
+    }
+}
+
+.core-activity-timeline {
+    > li {
+        border-bottom: 1px solid #eee;
+
+        > .right {
+            display: block;
+            margin-left: 80px;
+            word-wrap: break-word;
+            word-break: normal;
+
+            label {
+                color: @gray-light;
+                font-weight: normal;
+            }
+        }
+    }
+}
+
+.core-activity-indicate {
+    position: absolute;
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
+    border-radius: 12px;
+}
+
+.core-activity-time {
+    display: inline-block;
+    margin-left: 20px;
+    .pull-left;
+}
+
+.core-activity-headphoto,
+.core-activity-userlist {
+    display: inline-block;
+
+    > li {
+        display: inline-block;
+    }
+}
+
+.core-activity-headphoto {
+    margin-right: 10px;
+
+    img {
+        display: inline-block;
+        .core-headphoto-xs;
+    }
+}
+
+.core-activity-userlist {
+    > li {
+        margin-right: 2px;
+    }
+}
+
+.core-activity-content {
+    > .right {
+        margin-left: 80px;
+    }
+}
+
+.core-activity-action {
+    margin-left: 80px;
+
+    > .panel {
+        margin-bottom: 0;
+    }
+}
+
+.core-activity-text {
+    margin-left: 40px;
+}
+
+.core-activity-newdataset {
+    padding-bottom: 20px;
+
+    .core-activity-indicate {
+        border: 1px solid @brand-primary;
+        background-color: lighten(@brand-primary,40%);
+    }
+}
+
+.core-activity-end {
+    .core-activity-indicate {
+        border: 1px solid @gray-light;
+        background-color: lighten(@gray-light,40%);
+        margin-top: 30px;
+    }
+
+    .core-activity-content {
+        margin-top: 26px;
+    }
+}
+
+.core-notify-icon {
+    .dropdown-menu {
+        min-width: 350px;
+
+        > li {
+            &.core-activity-newdataset {
+                padding: 10px 15px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: @gray-lighter;
+            }
+
+            .right {
+                margin-left: 30px;
+            }
+        }
+    }
+
+    .core-activity-content {}
+}

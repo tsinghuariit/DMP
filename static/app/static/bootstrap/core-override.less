@@ -1,0 +1,206 @@
+@brand-primary: #5A327B;
+@brand-warning: #FEC430;
+@font-family-sans-serif: "SF Pro SC","SF Pro Text","PingFang SC","Helvetica Neue","Helvetica","Arial",sans-serif;
+@border-radius-base: 2px;
+@border-radius-large: 3px;
+@border-radius-small: 1px;
+
+.page-header {
+    margin-top: 0;
+}
+@navbar-inverse-border: none;
+@navbar-inverse-bg: @brand-primary;
+@navbar-inverse-link-color: #fff;
+@navbar-inverse-link-hover-bg: darken(@navbar-inverse-bg, 5%);
+@navbar-inverse-toggle-border-color: white;
+@navbar-inverse-toggle-hover-bg: transparent;
+@navbar-border-radius: 0;
+@navbar-default-bg: transparent;
+@navbar-default-border: transparent;
+
+.label {
+    display: inline-block;
+    margin-bottom: 1px;
+}
+
+.list-group-item {
+    padding: 5px 15px;
+}
+
+.btn-link {
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.navbar-brand {
+    img {
+        margin-top: -4px;
+        width: 83.8*2px;
+        height: 14.7*2px;
+    }
+}
+
+.form-control {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+body {
+    background-color: #F9F9F9;
+    color: #555;
+}
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+}
+
+textarea {
+    resize: none;
+}
+
+.dropdown-menu {
+    > li > a {
+        padding: 10px 20px;
+        .text-overflow;
+
+        i.fa {
+            font-size: 20px;
+            vertical-align: middle;
+            color: lighten(@gray-light,30%);
+            margin-right: 10px;
+        }
+    }
+}
+
+.dropdown {
+    button {
+        .text-overflow;
+    }
+}
+
+.core-box-shadow {
+    .box-shadow(0 1px 3px rgba(0,37,55,.05));
+}
+
+.list-group,
+.panel {
+    .core-box-shadow;
+}
+
+.button-line-variant(@color) {
+    color: @color;
+    background-color: transparent;
+    border-color: @color;
+
+    &.focus,
+    &:focus {
+        color: white;
+        background-color: @color;
+
+        .badge {
+            color: white;
+        }
+    }
+
+    &:hover {
+        color: white;
+        background-color: @color;
+
+        .badge {
+            color: white;
+        }
+    }
+
+    &.active,
+    &:active,
+    .open > .dropdown-toggle& {
+        color: white;
+        background-color: @color;
+
+        .badge {
+            color: white;
+        }
+
+        &.focus,
+        &:focus,
+        &:hover {
+            color: white;
+            background-color: @color;
+
+            .badge {
+                color: white;
+            }
+        }
+    }
+
+    &.active,
+    &:active,
+    .open > .dropdown-toggle& {
+        background-image: none;
+
+        .badge {
+            color: white;
+        }
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &.focus,
+        &:focus,
+        &:hover {
+            background-color: transparent;
+            border-color: @color;
+
+            .badge {
+                color: white;
+            }
+        }
+    }
+
+    .badge {
+        color: @color;
+        background-color: transparent;
+    }
+}
+// Alternate buttons
+// --------------------------------------------------
+
+.btn-line-default {
+    .button-line-variant(@gray-base);
+}
+
+.btn-line-primary {
+    .button-line-variant(@brand-primary);
+}
+// Success appears as green
+
+.btn-line-success {
+    .button-line-variant(@brand-success);
+}
+// Info appears as blue-green
+
+.btn-line-info {
+    .button-line-variant(@brand-info);
+}
+// Warning appears as orange
+
+.btn-line-warning {
+    .button-line-variant(@brand-warning);
+}
+// Danger and error appear as red
+
+.btn-line-danger {
+    .button-line-variant(@brand-danger);
+}
+
+.img-responsive {
+    margin-left: auto;
+    margin-right: auto;
+}

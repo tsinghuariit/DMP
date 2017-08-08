@@ -1,0 +1,116 @@
+{% extends "a.html" %}
+
+{% block head_script %}
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+{% endblock %}
+
+{% block about_hero %}
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb hidden-xs hidden-sm">
+      <li><a href="/">首页</a></li>
+      <li class="active">意见反馈</li>
+    </ol>
+  </div>
+  <div class="col-md-12">
+    <h4>FEEDBACK</h4>
+    <h2>意见反馈</h2>
+  </div>
+</div>
+<ul class="core-about-menu">
+  <li {% if request.path==url_for('feedback') %}class="active"{% endif %}><a href="/about">在线反馈</a></li>
+</ul>
+{% endblock %}
+
+{% block about_content %}
+
+<div class="col-md-7">
+  <form action="/feedback" method="post">
+    {{ form.hidden_tag() }}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="">手机号</label>
+          {{ form.cellphone(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label for="">电子邮箱</label>
+          {{ form.email(class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label for="">备注</label>
+          {{ form.report(class="form-control") }}
+        </div>
+          <div id="embed-captcha"></div>
+            <p id="wait" class="show">正在加载验证码......</p>
+            <p id="notice" class="hide">请先拖动验证码到相应位置</p>
+        <br>
+      </div>
+    </div>
+    <hr>
+    <input type="submit" value="提交" class="btn btn-primary core-user-info-content-save">
+  </form>
+</div>
+
+{% endblock %}
+
+{% block tpl_script %}
+<script>
+var handlerEmbed = function(captchaObj) {
+  $("#embed-submit").click(function(e) {
+    var validate = captchaObj.getValidate();
+    if (!validate) {
+      $("#notice")[0].className = "show";
+      setTimeout(function() {
+        $("#notice")[0].className = "hide";
+      }, 2000);
+      e.preventDefault();
+    }
+  });
+  // 将验证码加到id为captcha的元素里，同时会有三个input的值：geetest_challenge, geetest_validate, geetest_seccode
+  captchaObj.appendTo("#embed-captcha");
+  captchaObj.onReady(function() {
+    $("#wait")[0].className = "hide";
+  });
+  // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
+};
+$.ajax({
+  // 获取id，challenge，success（是否启用failback）
+  url: "/rest/get/code?t=" + (new Date()).getTime(), // 加随机数防止缓存
+  type: "get",
+  dataType: "json",
+  success: function(data) {
+    // 使用initGeetest接口
+    // 参数1：配置参数
+    // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+    initGeetest({
+      gt: data.gt,
+      challenge: data.challenge,
+      product: "embed", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+      offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+      // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+    }, handlerEmbed);
+  }
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  coreAboutMenu();
+});
+
+$(window).resize(function(){
+  coreAboutMenu();
+});
+
+function coreAboutMenu(){
+  if ($(window).width() < 992) {
+    $('#core-about-menu-m').append($('#core-about-menu'));
+  }
+  else {
+    $('#core-about-menu-o').append($('#core-about-menu'));
+  }
+};
+</script>
+
+{% endblock %}

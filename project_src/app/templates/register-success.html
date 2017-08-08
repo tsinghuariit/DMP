@@ -1,0 +1,28 @@
+{% extends "success.html" %}
+
+{% block success_icon %}
+<i class="fa fa-star text-primary"></i>
+{% endblock %}
+
+{% block success_code %}
+<h1>{{ _('注册成功') }}</h1>
+{% endblock %}
+
+{% block success_text %}
+<p>注册成功，我们将为您自动登录</p>
+<p><span id="core-success-countdown">3</span></p>
+{% endblock %}
+
+{% block success_script %}
+<script type="text/javascript">
+var t=2;
+setInterval("refer()",1000);
+function refer(){
+  if(t==0){
+    location.href="/";
+  }
+  document.getElementById('core-success-countdown').innerHTML= t;
+  t--;
+}
+</script>
+{% endblock %}

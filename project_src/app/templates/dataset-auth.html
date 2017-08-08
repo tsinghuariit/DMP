@@ -1,0 +1,125 @@
+{% extends "dataset-admin.html" %}
+
+{% block dataset_edit %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>
+                <a href="/datasets/item/{{ dataset['udi'] }}/download" class="p-l-5" style="display:inline-block;width:25px">
+                    <i class="fa fa-angle-left" style="font-size:21px;"></i>
+                </a>数据集授权管理
+            </h4>
+            <hr>
+        </div>
+        <div class="col-md-12">
+            <p>等待授权的用户</p>
+            <ul class="core-userlist" id="waiting">
+                {% for application in apply_waiting%}
+                    <li>
+                        <div class="core-userlist-headphoto">
+                            <a href="{{url_for('user_dataset', id = application.applier_id)}}"><img src="{{application.applier.avatarsource}}" alt=""></a>
+                        </div>
+                        <div class="core-userlist-content">
+                            <a href="{{url_for('user_dataset', id = application.applier_id)}}" class="core-userlist-name">{{application.applier['nickname']}}</a>
+                            <ul class="core-userlist-meta">
+                                <li>
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                    {{application.applier['professional']}}</li>
+                                <li>
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    {{application.applier['expert']}}</li>
+                            </ul>
+                        </div>
+                        <div class="core-userlist-action">
+                            <button class="btn btn-primary" core-apply="yes" auth-id="{{application.id}}">同意</button>
+                            <button class="btn btn-default" core-apply="no" auth-id="{{application.id}}">拒绝</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <p>已经授权的用户</p>
+            <ul class="core-userlist" id="applied">
+                {% for application in applied %}
+                    <li>
+                        <div class="core-userlist-headphoto">
+                            <a href="{{url_for('user_dataset', id = application.applier_id)}}"><img src="{{application.applier.avatarsource}}" alt=""></a>
+                        </div>
+                        <div class="core-userlist-content">
+                            <a href="{{url_for('user_dataset', id = application.applier_id)}}" class="core-userlist-name">{{application.applier['nickname']}}</a>
+                            <ul class="core-userlist-meta">
+                                <li>
+                                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                    {{application.applier['professional']}}</li>
+                                <li>
+                                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    {{application.applier['expert']}}</li>
+                            </ul>
+                        </div>
+                        <div class="core-userlist-action">
+                            {% if application.status == 3 %}
+                                <button class="btn btn-default" core-apply="ing" auth-id="{{application.id}}">已经授权</button>
+                            {% else %}
+                                <button class="btn btn-default" core-apply="undoing" auth-id="{{application.id}}">重新授权</button>
+                            {% endif %}
+
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function auth_apply_url(authID, newStatus) {
+            $.ajax({
+                url: "/auth/modify/" + authID,
+                async: false,
+                type: 'post',
+                dataType: 'json',
+                status: newStatus,
+                data: {
+                    "status": newStatus
+                }
+            });
+        }
+        $(document).ready(function () {
+            $('[core-apply]').on('click', function () {
+                authID = $(this).attr('auth-id');
+                switch ($(this).attr('core-apply')) {
+                    case 'yes':
+                        auth_apply_url(authID, 3);
+                        $(this).removeClass('btn-primary').addClass('btn-default').attr('core-apply', 'ing').text('已经授权');
+                        $(this).parent().find('[core-apply=no]').hide();
+                        var moveToApplied = $(this).parent().parent();
+                        $('#applied').prepend(moveToApplied);
+                        break;
+                    case 'no':
+                        auth_apply_url(authID, 4);
+                        $(this).attr('core-apply', 'undono').text('撤销拒绝');
+                        $(this).parent().find('[core-apply=yes]').hide();
+                        break;
+                    case 'undoyes':
+                        auth_apply_url(authID, 2);
+                        $(this).removeClass('btn-default').addClass('btn-primary').attr('core-apply', 'yes').text('同意');
+                        $(this).parent().find('[core-apply=no]').show();
+                        break;
+                    case 'undono':
+                        auth_apply_url(authID, 2);
+                        $(this).attr('core-apply', 'no').text('拒绝');
+                        $(this).parent().find('[core-apply=yes]').show();
+                        break;
+                    case 'ing':
+                        auth_apply_url(authID, 2);
+                        $(this).attr('core-apply', 'undoing').text('重新授权');
+                        break;
+                    case 'undoing':
+                        auth_apply_url(authID, 3);
+                        $(this).attr('core-apply', 'ing').text('已经授权');
+                        break;
+                }
+            })
+        })
+    </script>
+
+{% endblock %}
